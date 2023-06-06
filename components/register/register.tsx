@@ -1,4 +1,5 @@
 import Image from "next/image";
+import RegisterForm from "./form";
 
 export default function Register() {
   return (
@@ -16,10 +17,16 @@ export default function Register() {
             Sudah punya akun? <span className="text-cyan underline">Masuk</span>
           </p>
         </div>
-        {/* TODO: Form */}
+        <RegisterForm />
       </div>
       <div className="hidden lg:block lg:w-[50%]">
-        <Image src="/assets/join-us.png" alt="Join us" width={316} height={579} className="mx-auto" />
+        <Image
+          src="/assets/join-us.png"
+          alt="Join us"
+          width={316}
+          height={579}
+          className="mx-auto"
+        />
       </div>
     </div>
   );
