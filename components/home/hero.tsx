@@ -31,7 +31,7 @@ export default function Hero() {
           </button>
         </div>
       </div>
-      <div className="lg:w-[50%]">
+      <div className="hidden lg:block lg:w-[50%]">
         <Image
           src="/assets/hero-code.png"
           alt="Code written in Python"
