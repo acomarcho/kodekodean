@@ -2,7 +2,7 @@ import Image from "next/image";
 
 export default function Hero() {
   return (
-    <div className="p-[1rem] flex flex-col gap-[1rem] lg:flex-row lg:justify-between lg:items-center lg:p-[2.5rem]">
+    <div className="p-[1rem] flex flex-col gap-[1rem] lg:flex-row lg:justify-between lg:items-center lg:min-h-screen lg:px-[2.5rem] lg:py-[1rem]">
       <div className="flex flex-col gap-[1rem] lg:w-[50%]">
         <h1 className="text-white text-[1.25rem] font-bold lg:text-[3rem] lg:leading-[3.625rem]">
           Belajar pemrograman langsung menggunakan{" "}
