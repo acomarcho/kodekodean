@@ -1,5 +1,6 @@
 import Image from "next/image";
 import RegisterForm from "./form";
+import ToLogin from "./to-login";
 
 export default function Register() {
   return (
@@ -14,7 +15,7 @@ export default function Register() {
             untuk mulai belajar!
           </p>
           <p className="text-light-gray text-[1rem] lg:text-[1.25rem]">
-            Sudah punya akun? <span className="text-cyan underline">Masuk</span>
+            Sudah punya akun? <ToLogin />
           </p>
         </div>
         <RegisterForm />
