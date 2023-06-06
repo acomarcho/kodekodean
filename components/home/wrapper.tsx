@@ -7,7 +7,7 @@ interface Props {
 export default function Wrapper({ children }: Props) {
   return (
     <div className="bg-black">
-      <div className="p-[1rem] max-w-[1160px] lg:p-[2rem] mx-auto">
+      <div className="max-w-[1280px] mx-auto">
         {children}
       </div>
     </div>
