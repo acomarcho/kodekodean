@@ -3,7 +3,7 @@ import Image from "next/image";
 export default function Subcontent() {
   return (
     <>
-      <div className="p-[1rem] flex flex-col gap-[1rem] lg:flex-row lg:justify-between lg:items-center lg:min-h-screen lg:px-[2.5rem] lg:py-[1rem]">
+      <div className="p-[1rem] flex flex-col gap-[1rem] lg:flex-row lg:justify-between lg:items-center lg:min-h-screen lg:p-[2.5rem]">
         <div className="flex flex-col gap-[1rem] lg:w-[50%]">
           <h1 className="text-white text-[1.25rem] font-bold lg:text-[3rem] lg:leading-[3.625rem]">
             Materi yang <span className="text-cyan">terstruktur</span>.{" "}
@@ -43,7 +43,7 @@ export default function Subcontent() {
           />
         </div>
       </div>
-      <div className="p-[1rem] flex flex-col gap-[1rem] lg:flex-row lg:justify-between lg:items-center lg:min-h-screen lg:px-[2.5rem] lg:py-[1rem]">
+      <div className="p-[1rem] flex flex-col gap-[1rem] lg:flex-row lg:justify-between lg:items-center lg:min-h-screen lg:p-[2.5rem]">
         <div className="flex flex-col gap-[1rem] lg:w-[50%]">
           <h1 className="text-white text-[1.25rem] font-bold lg:text-[3rem] lg:leading-[3.625rem]">
             <span className="text-cyan">Harga yang sangat cocok</span> untuk{" "}

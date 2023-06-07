@@ -4,7 +4,7 @@ import ToLogin from "./to-login";
 
 export default function Register() {
   return (
-    <div className="flex flex-col gap-[1rem] p-[1rem] lg:flex-row lg:justify-between lg:items-center min-h-screen lg:px-[2.5rem] lg:py-[1rem]">
+    <div className="flex flex-col gap-[1rem] p-[1rem] lg:flex-row lg:justify-between lg:items-center min-h-screen lg:p-[2.5rem]">
       <div className="flex flex-col gap-[1rem] lg:w-[50%]">
         <div className="flex flex-col gap-[1rem]">
           <h1 className="text-white text-[1.25rem] font-bold lg:text-[3rem] leading-[3.625rem]">
