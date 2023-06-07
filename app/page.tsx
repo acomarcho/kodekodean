@@ -1,4 +1,4 @@
-import Wrapper from "@/components/home/wrapper";
+import Wrapper from "@/components/common/wrapper";
 import Hero from "@/components/home/hero";
 import Subcontent from "@/components/home/subcontent";
 
