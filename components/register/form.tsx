@@ -1,6 +1,7 @@
 "use client";
 
 import { Dispatch, SetStateAction, useState } from "react";
+import axios from "axios";
 
 interface InputProps {
   type: string;
@@ -58,6 +59,22 @@ export default function RegisterForm() {
     );
   };
 
+  const handleRegister = async () => {
+    if (
+      !validateUsername(username) ||
+      !validateEmail(email) ||
+      !validatePassword(password)
+    ) {
+      return;
+    }
+
+    await axios.post("/api/register", {
+      username,
+      email,
+      password,
+    });
+  };
+
   return (
     <div className="flex flex-col gap-[1rem]">
       <Input
@@ -84,7 +101,10 @@ export default function RegisterForm() {
         state={password}
         setState={setPassword}
       />
-      <button className="w-[100%] bg-primary px-[1.25rem] py-[1rem] text-white font-bold transition-all hover:bg-primary-hover text-[1rem] lg:text-[1.25rem]">
+      <button
+        className="w-[100%] bg-primary px-[1.25rem] py-[1rem] text-white font-bold transition-all hover:bg-primary-hover text-[1rem] lg:text-[1.25rem]"
+        onClick={handleRegister}
+      >
         Buat akun
       </button>
     </div>
