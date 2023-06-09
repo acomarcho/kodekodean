@@ -1,7 +1,8 @@
 "use client";
 
 import { Dispatch, SetStateAction, useState } from "react";
-import axios from "axios";
+import axios, { AxiosError } from "axios";
+import { notification } from "antd";
 
 interface InputProps {
   type: string;
@@ -59,6 +60,8 @@ export default function RegisterForm() {
     );
   };
 
+  const [api, contextHolder] = notification.useNotification();
+
   const handleRegister = async () => {
     if (
       !validateUsername(username) ||
@@ -68,15 +71,37 @@ export default function RegisterForm() {
       return;
     }
 
-    await axios.post("/api/register", {
-      username,
-      email,
-      password,
-    });
+    interface RegisterResponse {
+      data: {
+        message: string;
+      };
+    }
+
+    try {
+      await axios.post("/api/register", {
+        username,
+        email,
+        password,
+      });
+      api.success({
+        message: "Register berhasil",
+        description: "Akun berhasil dibuat! Silakan masuk ke dalam akun Anda.",
+        placement: "bottomRight",
+      });
+    } catch (error) {
+      const err = error as AxiosError;
+      const errResponse = err.response as RegisterResponse;
+      api.error({
+        message: "Register gagal",
+        description: errResponse.data.message,
+        placement: "bottomRight",
+      });
+    }
   };
 
   return (
     <div className="flex flex-col gap-[1rem]">
+      {contextHolder}
       <Input
         type="text"
         label="Username"
@@ -102,8 +127,13 @@ export default function RegisterForm() {
         setState={setPassword}
       />
       <button
-        className="w-[100%] bg-primary px-[1.25rem] py-[1rem] text-white font-bold transition-all hover:bg-primary-hover text-[1rem] lg:text-[1.25rem]"
+        className="w-[100%] bg-primary px-[1.25rem] py-[1rem] text-white font-bold transition-all hover:bg-primary-hover text-[1rem] lg:text-[1.25rem] disabled:opacity-[0.5]"
         onClick={handleRegister}
+        disabled={
+          !validateUsername(username) ||
+          !validateEmail(email) ||
+          !validatePassword(password)
+        }
       >
         Buat akun
       </button>

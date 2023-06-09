@@ -1,6 +1,6 @@
 CREATE TABLE IF NOT EXISTS users (
   id SERIAL PRIMARY KEY,
-  username VARCHAR,
-  email VARCHAR,
+  username VARCHAR UNIQUE,
+  email VARCHAR UNIQUE,
   password VARCHAR
 );
