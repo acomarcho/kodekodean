@@ -25,7 +25,8 @@ export async function POST(request: Request) {
     let values: string[];
     let result: QueryResult<any>;
 
-    query = "SELECT id, username, email, password FROM users WHERE username = $1 OR email = $1";
+    query =
+      "SELECT id, username, email, password FROM users WHERE username = $1 OR email = $1";
     values = [usernameOrEmail];
     result = await conn!.query(query, values);
 
