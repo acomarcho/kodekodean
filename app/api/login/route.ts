@@ -3,6 +3,8 @@ import conn from "@/lib/pg";
 import bcrypt from "bcrypt";
 import { QueryResult } from "pg";
 import { User } from "@/lib/schema";
+import { cookies } from "next/headers";
+import jwt from "jwt-simple";
 
 export async function POST(request: Request) {
   interface LoginRequest {
@@ -53,6 +55,18 @@ export async function POST(request: Request) {
         { status: 400 }
       );
     }
+
+    const signedJWT = jwt.encode(
+      {
+        id: user.id,
+        username: user.username,
+        email: user.email,
+      },
+      process.env.JWT_SECRET!
+    );
+
+    const cookieStore = cookies();
+    cookieStore.set("jwt", signedJWT);
 
     return NextResponse.json({ message: "Login berhasil" }, { status: 200 });
   } catch (error) {
