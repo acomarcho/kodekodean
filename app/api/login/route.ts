@@ -2,6 +2,7 @@ import { NextResponse } from "next/server";
 import conn from "@/lib/pg";
 import bcrypt from "bcrypt";
 import { QueryResult } from "pg";
+import { User } from "@/lib/schema";
 
 export async function POST(request: Request) {
   interface LoginRequest {
@@ -40,7 +41,19 @@ export async function POST(request: Request) {
       );
     }
 
-    console.log(result.rows);
+    const user = result.rows[0] as User;
+
+    const isPasswordMatch = await bcrypt.compare(password, user.password);
+
+    if (!isPasswordMatch) {
+      return NextResponse.json(
+        {
+          message:
+            "Data yang Anda masukkan salah. Pastikan data yang Anda masukkan benar! ",
+        },
+        { status: 400 }
+      );
+    }
 
     return NextResponse.json({ message: "Login berhasil" }, { status: 200 });
   } catch (error) {
