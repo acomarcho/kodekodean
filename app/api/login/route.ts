@@ -21,8 +21,6 @@ export async function POST(request: Request) {
       );
     }
 
-    // const hashedPassword = await bcrypt.hash(password, 12);
-
     let query: string;
     let values: string[];
     let result: QueryResult<any>;
