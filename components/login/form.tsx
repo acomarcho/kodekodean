@@ -1,6 +1,8 @@
 "use client";
 
 import { Dispatch, SetStateAction, useState } from "react";
+import axios, { AxiosError } from "axios";
+import { notification } from "antd";
 
 interface InputProps {
   type: string;
@@ -48,8 +50,46 @@ export default function RegisterForm() {
     return v !== "";
   };
 
+  const [api, contextHolder] = notification.useNotification();
+
+  const handleLogin = async () => {
+    if (
+      !validateUsernameOrEmail(usernameOrEmail) ||
+      !validatePassword(password)
+    ) {
+      return;
+    }
+
+    interface LoginResponse {
+      data: {
+        message: string;
+      };
+    }
+
+    try {
+      await axios.post("/api/login", {
+        usernameOrEmail,
+        password,
+      });
+      api.success({
+        message: "Login berhasil",
+        description: "Selamat belajar di kodekodean.id!",
+        placement: "bottomRight",
+      });
+    } catch (error) {
+      const err = error as AxiosError;
+      const errResponse = err.response as LoginResponse;
+      api.error({
+        message: "Login gagal",
+        description: errResponse.data.message,
+        placement: "bottomRight",
+      });
+    }
+  };
+
   return (
     <div className="flex flex-col gap-[1rem]">
+      {contextHolder}
       <Input
         type="text"
         label="Username/email"
@@ -66,7 +106,14 @@ export default function RegisterForm() {
         state={password}
         setState={setPassword}
       />
-      <button className="w-[100%] bg-primary px-[1.25rem] py-[1rem] text-white font-bold transition-all hover:bg-primary-hover text-[1rem] lg:text-[1.25rem]">
+      <button
+        className="w-[100%] bg-primary px-[1.25rem] py-[1rem] text-white font-bold transition-all hover:bg-primary-hover text-[1rem] lg:text-[1.25rem] disabled:opacity-[0.5]"
+        onClick={handleLogin}
+        disabled={
+          !validateUsernameOrEmail(usernameOrEmail) ||
+          !validatePassword(password)
+        }
+      >
         Masuk
       </button>
     </div>
