@@ -9,6 +9,7 @@ services:
       - ./components:/app/components
       - ./public:/app/public
       - ./lib:/app/lib
+      - ./contexts:/app/contexts
   db:
     image: postgres:14.1-alpine
     restart: always

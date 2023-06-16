@@ -1,6 +1,6 @@
 "use client";
 
-import { Dispatch, SetStateAction, useState } from "react";
+import { Dispatch, SetStateAction, useState, useRef } from "react";
 import axios, { AxiosError } from "axios";
 import { notification } from "antd";
 import HCaptcha from "@hcaptcha/react-hcaptcha";
@@ -54,6 +54,7 @@ export default function RegisterForm() {
   const [api, contextHolder] = notification.useNotification();
 
   const [token, setToken] = useState<string | null>(null);
+  const captchaRef = useRef<HCaptcha>(null);
   const [isLoading, setIsLoading] = useState<boolean>(false);
 
   const handleLogin = async () => {
@@ -98,6 +99,8 @@ export default function RegisterForm() {
         description: errMessage,
         placement: "bottomRight",
       });
+      captchaRef.current?.resetCaptcha();
+      setToken(null);
       setIsLoading(false);
     }
   };
@@ -122,6 +125,7 @@ export default function RegisterForm() {
         setState={setPassword}
       />
       <HCaptcha
+        ref={captchaRef}
         sitekey="cc8d0e2e-fea7-4e52-8aa9-aabe235a3589"
         onVerify={(token, _) => {
           setToken(token);
