@@ -1,6 +1,7 @@
 "use client";
 
 import { Dispatch, SetStateAction, useState, useRef } from "react";
+import { useRouter } from "next/navigation";
 import axios, { AxiosError } from "axios";
 import { notification } from "antd";
 import HCaptcha from "@hcaptcha/react-hcaptcha";
@@ -67,6 +68,8 @@ export default function RegisterForm() {
   const captchaRef = useRef<HCaptcha>(null);
   const [isLoading, setIsLoading] = useState<boolean>(false);
 
+  const router = useRouter();
+
   const handleRegister = async () => {
     if (
       !validateUsername(username) ||
@@ -92,12 +95,12 @@ export default function RegisterForm() {
         password,
         token,
       });
-      setIsLoading(false);
       api.success({
         message: "Register berhasil",
         description: "Akun berhasil dibuat! Silakan masuk ke dalam akun Anda.",
         placement: "bottomRight",
       });
+      router.push("/login");
     } catch (error) {
       const err = error as AxiosError;
       let errMessage = "";
