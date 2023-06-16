@@ -52,10 +52,13 @@ export default function RegisterForm() {
 
   const [api, contextHolder] = notification.useNotification();
 
+  const [isLoading, setIsLoading] = useState<boolean>(false);
+
   const handleLogin = async () => {
     if (
       !validateUsernameOrEmail(usernameOrEmail) ||
-      !validatePassword(password)
+      !validatePassword(password) ||
+      isLoading
     ) {
       return;
     }
@@ -67,10 +70,12 @@ export default function RegisterForm() {
     }
 
     try {
+      setIsLoading(true);
       await axios.post("/api/login", {
         usernameOrEmail,
         password,
       });
+      setIsLoading(false);
       api.success({
         message: "Login berhasil",
         description: "Selamat belajar di kodekodean.id!",
@@ -78,12 +83,19 @@ export default function RegisterForm() {
       });
     } catch (error) {
       const err = error as AxiosError;
-      const errResponse = err.response as LoginResponse;
+      let errMessage = "";
+      if (err.response) {
+        const errResponse = err.response as LoginResponse;
+        errMessage = errResponse.data.message;
+      } else {
+        errMessage = err.message;
+      }
       api.error({
         message: "Login gagal",
-        description: errResponse.data.message,
+        description: errMessage,
         placement: "bottomRight",
       });
+      setIsLoading(false);
     }
   };
 
@@ -111,7 +123,8 @@ export default function RegisterForm() {
         onClick={handleLogin}
         disabled={
           !validateUsernameOrEmail(usernameOrEmail) ||
-          !validatePassword(password)
+          !validatePassword(password) ||
+          isLoading
         }
       >
         Masuk
