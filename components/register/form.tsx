@@ -95,7 +95,6 @@ export default function RegisterForm() {
         password,
         token,
       });
-      setIsLoading(false);
       api.success({
         message: "Register berhasil",
         description: "Akun berhasil dibuat! Silakan masuk ke dalam akun Anda.",

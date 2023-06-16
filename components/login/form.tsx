@@ -82,7 +82,6 @@ export default function RegisterForm() {
         password,
         token,
       });
-      setIsLoading(false);
       api.success({
         message: "Login berhasil",
         description: "Selamat belajar di kodekodean.id!",
