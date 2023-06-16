@@ -1,5 +1,6 @@
 import Wrapper from "@/components/common/wrapper";
 import Register from "@/components/register/register";
+import AuthProvider from "@/components/common/auth-provider";
 
 import { redirect } from "next/navigation";
 import { authenticateUser } from "@/lib/authenticate";
@@ -17,7 +18,9 @@ export default async function RegisterPage() {
 
   return (
     <Wrapper>
-      <Register />
+      <AuthProvider>
+        <Register />
+      </AuthProvider>
     </Wrapper>
   );
 }

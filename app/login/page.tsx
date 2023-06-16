@@ -1,6 +1,6 @@
 import Wrapper from "@/components/common/wrapper";
 import Login from "@/components/login/login";
-import AuthCheck from "@/components/login/auth-check";
+import AuthProvider from "@/components/common/auth-provider";
 
 export const metadata = {
   title: "kodekodean.id - Login",
@@ -10,8 +10,9 @@ export const metadata = {
 export default async function LoginPage() {
   return (
     <Wrapper>
-      <AuthCheck />
-      <Login />
+      <AuthProvider requireGuest={true} redirectTo={"/authenticated"}>
+        <Login />
+      </AuthProvider>
     </Wrapper>
   );
 }
