@@ -76,7 +76,12 @@ export async function POST(request: Request) {
     );
 
     const cookieStore = cookies();
-    cookieStore.set("jwt", signedJWT);
+    cookieStore.set({
+      name: "jwt",
+      value: signedJWT,
+      expires: new Date().setDate(new Date().getDate() + 7),
+      path: "/",
+    });
 
     return NextResponse.json({ message: "Login berhasil" }, { status: 200 });
   } catch (error) {
