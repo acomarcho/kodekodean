@@ -62,11 +62,14 @@ export default function RegisterForm() {
 
   const [api, contextHolder] = notification.useNotification();
 
+  const [isLoading, setIsLoading] = useState<boolean>(false);
+
   const handleRegister = async () => {
     if (
       !validateUsername(username) ||
       !validateEmail(email) ||
-      !validatePassword(password)
+      !validatePassword(password) ||
+      isLoading
     ) {
       return;
     }
@@ -78,11 +81,13 @@ export default function RegisterForm() {
     }
 
     try {
+      setIsLoading(true);
       await axios.post("/api/register", {
         username,
         email,
         password,
       });
+      setIsLoading(false);
       api.success({
         message: "Register berhasil",
         description: "Akun berhasil dibuat! Silakan masuk ke dalam akun Anda.",
@@ -90,12 +95,19 @@ export default function RegisterForm() {
       });
     } catch (error) {
       const err = error as AxiosError;
-      const errResponse = err.response as RegisterResponse;
+      let errMessage = "";
+      if (err.response) {
+        const errResponse = err.response as RegisterResponse;
+        errMessage = errResponse.data.message;
+      } else {
+        errMessage = err.message;
+      }
       api.error({
         message: "Register gagal",
-        description: errResponse.data.message,
+        description: errMessage,
         placement: "bottomRight",
       });
+      setIsLoading(false);
     }
   };
 
@@ -132,7 +144,8 @@ export default function RegisterForm() {
         disabled={
           !validateUsername(username) ||
           !validateEmail(email) ||
-          !validatePassword(password)
+          !validatePassword(password) ||
+          isLoading
         }
       >
         Buat akun
