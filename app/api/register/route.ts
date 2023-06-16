@@ -16,7 +16,7 @@ export async function POST(request: Request) {
     const { username, email, password, token } =
       (await request.json()) as RegisterRequest;
 
-    if (!username || !email || !password) {
+    if (!username || !email || !password || !token) {
       return NextResponse.json(
         { message: "Semua data harus diisi" },
         { status: 400 }

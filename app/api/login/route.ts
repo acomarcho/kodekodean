@@ -16,7 +16,7 @@ export async function POST(request: Request) {
     const { usernameOrEmail, password, token } =
       (await request.json()) as LoginRequest;
 
-    if (!usernameOrEmail || !password) {
+    if (!usernameOrEmail || !password || !token) {
       return NextResponse.json(
         { message: "Semua data harus diisi" },
         { status: 400 }
