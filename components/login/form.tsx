@@ -3,6 +3,7 @@
 import { Dispatch, SetStateAction, useState } from "react";
 import axios, { AxiosError } from "axios";
 import { notification } from "antd";
+import HCaptcha from "@hcaptcha/react-hcaptcha";
 
 interface InputProps {
   type: string;
@@ -52,6 +53,7 @@ export default function RegisterForm() {
 
   const [api, contextHolder] = notification.useNotification();
 
+  const [token, setToken] = useState<string | null>(null);
   const [isLoading, setIsLoading] = useState<boolean>(false);
 
   const handleLogin = async () => {
@@ -74,6 +76,7 @@ export default function RegisterForm() {
       await axios.post("/api/login", {
         usernameOrEmail,
         password,
+        token,
       });
       setIsLoading(false);
       api.success({
@@ -118,12 +121,19 @@ export default function RegisterForm() {
         state={password}
         setState={setPassword}
       />
+      <HCaptcha
+        sitekey="cc8d0e2e-fea7-4e52-8aa9-aabe235a3589"
+        onVerify={(token, _) => {
+          setToken(token);
+        }}
+      />
       <button
         className="w-[100%] bg-primary px-[1.25rem] py-[1rem] text-white font-bold transition-all hover:bg-primary-hover text-[1rem] lg:text-[1.25rem] disabled:opacity-[0.5]"
         onClick={handleLogin}
         disabled={
           !validateUsernameOrEmail(usernameOrEmail) ||
           !validatePassword(password) ||
+          !token ||
           isLoading
         }
       >
