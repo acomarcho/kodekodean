@@ -3,20 +3,30 @@ import conn from "@/lib/pg";
 import bcrypt from "bcrypt";
 import { QueryResult } from "pg";
 import { User } from "@/lib/schema";
+import { verify } from "hcaptcha";
 
 export async function POST(request: Request) {
   interface LoginRequest {
     usernameOrEmail: string;
     password: string;
+    token: string;
   }
 
   try {
-    const { usernameOrEmail, password } =
+    const { usernameOrEmail, password, token } =
       (await request.json()) as LoginRequest;
 
     if (!usernameOrEmail || !password) {
       return NextResponse.json(
         { message: "Semua data harus diisi" },
+        { status: 400 }
+      );
+    }
+
+    const isVerified = await verify(process.env.HCAPTCHA_SECRET!, token);
+    if (!isVerified.success) {
+      return NextResponse.json(
+        { message: "Token hCaptcha tidak valid" },
         { status: 400 }
       );
     }

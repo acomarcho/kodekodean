@@ -2,21 +2,31 @@ import { NextResponse } from "next/server";
 import conn from "@/lib/pg";
 import bcrypt from "bcrypt";
 import { QueryResult } from "pg";
+import { verify } from "hcaptcha";
 
 export async function POST(request: Request) {
   interface RegisterRequest {
     username: string;
     email: string;
     password: string;
+    token: string;
   }
 
   try {
-    const { username, email, password } =
+    const { username, email, password, token } =
       (await request.json()) as RegisterRequest;
 
     if (!username || !email || !password) {
       return NextResponse.json(
         { message: "Semua data harus diisi" },
+        { status: 400 }
+      );
+    }
+
+    const isVerified = await verify(process.env.HCAPTCHA_SECRET!, token);
+    if (!isVerified.success) {
+      return NextResponse.json(
+        { message: "Token hCaptcha tidak valid" },
         { status: 400 }
       );
     }
