@@ -3,6 +3,7 @@
 import { Dispatch, SetStateAction, useState } from "react";
 import axios, { AxiosError } from "axios";
 import { notification } from "antd";
+import HCaptcha from "@hcaptcha/react-hcaptcha";
 
 interface InputProps {
   type: string;
@@ -52,10 +53,14 @@ export default function RegisterForm() {
 
   const [api, contextHolder] = notification.useNotification();
 
+  const [token, setToken] = useState<string | null>(null);
+  const [isLoading, setIsLoading] = useState<boolean>(false);
+
   const handleLogin = async () => {
     if (
       !validateUsernameOrEmail(usernameOrEmail) ||
-      !validatePassword(password)
+      !validatePassword(password) ||
+      isLoading
     ) {
       return;
     }
@@ -67,10 +72,13 @@ export default function RegisterForm() {
     }
 
     try {
+      setIsLoading(true);
       await axios.post("/api/login", {
         usernameOrEmail,
         password,
+        token,
       });
+      setIsLoading(false);
       api.success({
         message: "Login berhasil",
         description: "Selamat belajar di kodekodean.id!",
@@ -78,12 +86,19 @@ export default function RegisterForm() {
       });
     } catch (error) {
       const err = error as AxiosError;
-      const errResponse = err.response as LoginResponse;
+      let errMessage = "";
+      if (err.response) {
+        const errResponse = err.response as LoginResponse;
+        errMessage = errResponse.data.message;
+      } else {
+        errMessage = err.message;
+      }
       api.error({
         message: "Login gagal",
-        description: errResponse.data.message,
+        description: errMessage,
         placement: "bottomRight",
       });
+      setIsLoading(false);
     }
   };
 
@@ -106,12 +121,20 @@ export default function RegisterForm() {
         state={password}
         setState={setPassword}
       />
+      <HCaptcha
+        sitekey="cc8d0e2e-fea7-4e52-8aa9-aabe235a3589"
+        onVerify={(token, _) => {
+          setToken(token);
+        }}
+      />
       <button
         className="w-[100%] bg-primary px-[1.25rem] py-[1rem] text-white font-bold transition-all hover:bg-primary-hover text-[1rem] lg:text-[1.25rem] disabled:opacity-[0.5]"
         onClick={handleLogin}
         disabled={
           !validateUsernameOrEmail(usernameOrEmail) ||
-          !validatePassword(password)
+          !validatePassword(password) ||
+          !token ||
+          isLoading
         }
       >
         Masuk

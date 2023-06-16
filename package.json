@@ -9,6 +9,7 @@
     "lint": "next lint"
   },
   "dependencies": {
+    "@hcaptcha/react-hcaptcha": "^1.8.1",
     "@types/node": "20.2.5",
     "@types/react": "18.2.7",
     "@types/react-dom": "18.2.4",
@@ -20,6 +21,7 @@
     "eslint-config-next": "13.4.4",
     "i": "^0.3.7",
     "jwt-simple": "^0.5.6",
+    "hcaptcha": "^0.1.1",
     "next": "13.4.4",
     "npm": "^9.7.1",
     "pg": "^8.11.0",
