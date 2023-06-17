@@ -1,5 +1,6 @@
 import Wrapper from "@/components/common/wrapper";
 import Hero from "@/components/course/home/hero";
+import Courses from "@/components/course/home/courses";
 import AuthProvider from "@/components/common/auth-provider";
 
 export const metadata = {
@@ -11,7 +12,10 @@ export default async function RegisterPage() {
   return (
     <Wrapper>
       <AuthProvider requireLogin={true} redirectTo={"/login"}>
-        <Hero />
+        <div className="min-h-screen">
+          <Hero />
+          <Courses />
+        </div>
       </AuthProvider>
     </Wrapper>
   );
