@@ -18,7 +18,7 @@ export default async function RegisterPage() {
 
   return (
     <Wrapper>
-      <AuthProvider>
+      <AuthProvider requireGuest={true} redirectTo={"/authenticated"}>
         <Register />
       </AuthProvider>
     </Wrapper>
