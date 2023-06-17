@@ -10,9 +10,11 @@ interface InputProps {
   type: string;
   label: string;
   errorMessage: string;
-  validationFunction: (v: string) => boolean;
+  validationFunction?: (v: string) => boolean;
   state: string;
   setState: Dispatch<SetStateAction<string>>;
+  validationFunction2?: (v1: string, v2: string) => boolean;
+  state2?: string;
 }
 
 function Input({
@@ -22,6 +24,8 @@ function Input({
   validationFunction,
   state,
   setState,
+  validationFunction2,
+  state2,
 }: InputProps) {
   return (
     <div className="flex gap-[0.5rem] flex-col align-start">
@@ -34,9 +38,16 @@ function Input({
         value={state}
         onChange={(e) => setState(e.currentTarget.value)}
       />
-      {!validationFunction(state) && (
+      {validationFunction && !validationFunction(state) && (
         <p className="text-red text-[1rem] lg:text-[1.25rem]">{errorMessage}</p>
       )}
+      {validationFunction2 &&
+        typeof state2 === "string" &&
+        !validationFunction2(state, state2) && (
+          <p className="text-red text-[1rem] lg:text-[1.25rem]">
+            {errorMessage}
+          </p>
+        )}
     </div>
   );
 }
@@ -62,6 +73,11 @@ export default function RegisterForm() {
     );
   };
 
+  const [confirmationPassword, setConfirmationPassword] = useState<string>("");
+  const validateConfirmationPassword = (v1: string, v2: string) => {
+    return v1 === v2;
+  };
+
   const [api, contextHolder] = notification.useNotification();
 
   const [token, setToken] = useState<string | null>(null);
@@ -75,6 +91,7 @@ export default function RegisterForm() {
       !validateUsername(username) ||
       !validateEmail(email) ||
       !validatePassword(password) ||
+      !validateConfirmationPassword(confirmationPassword, password) ||
       !token ||
       isLoading
     ) {
@@ -146,10 +163,19 @@ export default function RegisterForm() {
       <Input
         type="password"
         label="Password"
-        errorMessage="Password minimal terdiri atas 8 karakter yang terdiri atas huruf alfabet (kecil atau besar) dan angka."
+        errorMessage="Password minimal terdiri atas 8 karakter yang terdiri atas huruf alfabet (kecil atau besar) dan angka"
         validationFunction={validatePassword}
         state={password}
         setState={setPassword}
+      />
+      <Input
+        type="password"
+        label="Konfirmasi password"
+        errorMessage="Password dengan konfirmasi password berbeda"
+        validationFunction2={validateConfirmationPassword}
+        state={confirmationPassword}
+        state2={password}
+        setState={setConfirmationPassword}
       />
       <HCaptcha
         ref={captchaRef}
@@ -165,6 +191,7 @@ export default function RegisterForm() {
           !validateUsername(username) ||
           !validateEmail(email) ||
           !validatePassword(password) ||
+          !validateConfirmationPassword(confirmationPassword, password) ||
           !token ||
           isLoading
         }
