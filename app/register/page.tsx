@@ -10,7 +10,7 @@ export const metadata = {
 export default async function RegisterPage() {
   return (
     <Wrapper>
-      <AuthProvider requireGuest={true} redirectTo={"/authenticated"}>
+      <AuthProvider requireGuest={true} redirectTo={"/course"}>
         <Register />
       </AuthProvider>
     </Wrapper>

@@ -87,7 +87,7 @@ export default function RegisterForm() {
         description: "Selamat belajar di kodekodean.id!",
         placement: "bottomRight",
       });
-      router.push("/authenticated");
+      router.push("/course");
     } catch (error) {
       const err = error as AxiosError;
       let errMessage = "";
