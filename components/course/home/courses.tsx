@@ -1,4 +1,5 @@
 import Image from "next/image";
+import Greeting from "./greeting";
 
 export default function Courses() {
   return (
@@ -9,10 +10,7 @@ export default function Courses() {
             Ingin <span className="text-purple">belajar apa</span> Anda hari
             ini?
           </h1>
-          <p className="text-light-gray text-[1rem] lg:text-[1.25rem]">
-            Halo, <span className="text-yellow">{"{{username}}"}</span>! Yuk,
-            pilih salah satu dari pathway yang kami sediakan!
-          </p>
+          <Greeting />
         </div>
       </div>
       <div className="hidden lg:block lg:w-[50%]">
