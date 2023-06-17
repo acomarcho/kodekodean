@@ -97,10 +97,13 @@ export default function RegisterForm() {
       });
       api.success({
         message: "Register berhasil",
-        description: "Akun berhasil dibuat! Silakan masuk ke dalam akun Anda.",
+        description:
+          "Akun berhasil dibuat! Mengarahkan Anda ke halaman login...",
         placement: "bottomRight",
       });
-      router.push("/login");
+      setTimeout(() => {
+        router.push("/login");
+      }, 2000);
     } catch (error) {
       const err = error as AxiosError;
       let errMessage = "";
