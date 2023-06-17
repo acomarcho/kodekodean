@@ -1,17 +1,17 @@
 import Wrapper from "@/components/common/wrapper";
-import Register from "@/components/register/register";
+import Courses from "@/components/course/home/courses";
 import AuthProvider from "@/components/common/auth-provider";
 
 export const metadata = {
-  title: "kodekodean.id - Register",
-  description: "Belajar pemrograman ala anak ITB",
+  title: "kodekodean.id - Courses",
+  description: "Pilih course yang ingin Anda pelajari!",
 };
 
 export default async function RegisterPage() {
   return (
     <Wrapper>
-      <AuthProvider requireGuest={true} redirectTo={"/authenticated"}>
-        <Register />
+      <AuthProvider requireLogin={true} redirectTo={"/login"}>
+        <Courses />
       </AuthProvider>
     </Wrapper>
   );
