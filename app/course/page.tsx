@@ -8,7 +8,7 @@ export const metadata = {
   description: "Pilih course yang ingin Anda pelajari!",
 };
 
-export default async function RegisterPage() {
+export default async function CoursePage() {
   return (
     <Wrapper>
       <AuthProvider requireLogin={true} redirectTo={"/login"}>

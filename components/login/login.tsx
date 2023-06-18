@@ -7,7 +7,7 @@ export default function Login() {
     <div className="flex flex-col gap-[1rem] p-[1rem] lg:flex-row lg:justify-between lg:items-center min-h-screen lg:p-[2.5rem]">
       <div className="flex flex-col gap-[1rem] lg:w-[50%]">
         <div className="flex flex-col gap-[1rem]">
-          <h1 className="text-white text-[1.25rem] font-bold lg:text-[3rem] leading-[3.625rem]">
+          <h1 className="text-white text-[1.25rem] font-bold lg:text-[3rem] lg:leading-[3.625rem]">
             <span className="text-yellow">Masuk</span> ke akunmu
           </h1>
           <p className="text-light-gray text-[1rem] lg:text-[1.25rem]">
