@@ -31,7 +31,7 @@ export default function CourseProvider({ children, id }: Props) {
       course: "IF1210 Dasar Pemrograman",
     });
     setIsLoading(false);
-  }, []);
+  }, [id]);
 
   if (isLoading) {
     return (
