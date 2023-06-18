@@ -8,7 +8,7 @@ export async function GET() {
     const jwtToken = cookieStore.get("jwt");
 
     if (!jwtToken) {
-      return NextResponse.json({ success: false, user: null }, { status: 403 });
+      return NextResponse.json({ success: false, user: null }, { status: 401 });
     }
 
     try {
