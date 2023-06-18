@@ -11,11 +11,18 @@ interface Params {
 export async function GET(_: Request, { params }: Params) {
   try {
     let query: string;
-    let values: string[];
+    let values: number[];
     let result: QueryResult<any>;
 
+    if (!/^\d+$/.test(params.id)) {
+      return NextResponse.json(
+        { message: "Format ID tidak valid" },
+        { status: 400 }
+      );
+    }
+
     query = "SELECT id, title, description, course FROM courses WHERE id = $1";
-    values = [params.id];
+    values = [parseInt(params.id)];
     result = await conn!.query(query, values);
 
     if (result.rows.length === 0) {
@@ -25,7 +32,7 @@ export async function GET(_: Request, { params }: Params) {
       );
     }
 
-    return NextResponse.json({ courses: result.rows[0] }, { status: 200 });
+    return NextResponse.json({ course: result.rows[0] }, { status: 200 });
   } catch (error) {
     return NextResponse.json(
       { message: "Terjadi kesalahan pada server" },
