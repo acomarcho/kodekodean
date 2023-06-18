@@ -5,7 +5,7 @@ import { QueryResult } from "pg";
 import { User } from "@/lib/schema";
 import { verify } from "hcaptcha";
 import { cookies } from "next/headers";
-import jwt from "jwt-simple";
+import { SignJWT } from "jose";
 
 export async function POST(request: Request) {
   interface LoginRequest {
@@ -66,14 +66,17 @@ export async function POST(request: Request) {
       );
     }
 
-    const signedJWT = jwt.encode(
-      {
-        id: user.id,
-        username: user.username,
-        email: user.email,
-      },
-      process.env.JWT_SECRET!
-    );
+    const iat = Math.floor(Date.now() / 1000);
+    const signedJWT = await new SignJWT({
+      id: user.id,
+      username: user.username,
+      email: user.email,
+    })
+      .setProtectedHeader({ alg: "HS256", typ: "JWT" })
+      .setExpirationTime(iat + 60 * 60 * 24 * 7)
+      .setIssuedAt(iat)
+      .setNotBefore(iat)
+      .sign(new TextEncoder().encode(process.env.JWT_SECRET!));
 
     const cookieStore = cookies();
     cookieStore.set({

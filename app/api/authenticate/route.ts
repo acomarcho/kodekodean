@@ -1,6 +1,6 @@
 import { NextResponse } from "next/server";
 import { cookies } from "next/headers";
-import jwt from "jwt-simple";
+import { jwtVerify } from "jose";
 
 export async function GET() {
   try {
@@ -8,13 +8,16 @@ export async function GET() {
     const jwtToken = cookieStore.get("jwt");
 
     if (!jwtToken) {
-      return NextResponse.json({ success: false, user: null }, { status: 403 });
+      return NextResponse.json({ success: false, user: null }, { status: 401 });
     }
 
     try {
-      const decodedJwt = jwt.decode(jwtToken.value, process.env.JWT_SECRET!);
+      const { payload } = await jwtVerify(
+        jwtToken.value,
+        new TextEncoder().encode(process.env.JWT_SECRET!)
+      );
       return NextResponse.json(
-        { success: true, user: decodedJwt },
+        { success: true, user: payload },
         { status: 200 }
       );
     } catch (error) {

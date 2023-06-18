@@ -4,3 +4,10 @@ CREATE TABLE IF NOT EXISTS users (
   email VARCHAR UNIQUE,
   password VARCHAR
 );
+
+CREATE TABLE IF NOT EXISTS courses (
+  id SERIAL PRIMARY KEY,
+  title VARCHAR,
+  description VARCHAR,
+  course VARCHAR
+);
