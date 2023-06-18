@@ -4,7 +4,13 @@ import { QueryResult } from "pg";
 
 export async function GET() {
   try {
-    return NextResponse.json({ message: "DEBUG: Sukses!" }, { status: 200 });
+    let query: string;
+    let result: QueryResult<any>;
+
+    query = "SELECT id, title, description, course FROM courses";
+    result = await conn!.query(query);
+
+    return NextResponse.json({ courses: result.rows }, { status: 200 });
   } catch (error) {
     return NextResponse.json(
       { message: "Terjadi kesalahan pada server" },
