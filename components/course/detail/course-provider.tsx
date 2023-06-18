@@ -22,15 +22,31 @@ export default function CourseProvider({ children, id }: Props) {
   const [isLoading, setIsLoading] = useState(true);
 
   useEffect(() => {
-    // TODO: Fetch course data from API
-    setCourse({
-      id: id,
-      title: "Pemrograman fungsional menggunakan Haskell",
-      description:
-        "Belajar pemrograman menggunakan paradigma fungsional. Anda akan mempelajari gaya pemrograman fungsional, fungsi rekursif, dan fungsi lambda. Lorem ipsum dolor sit amet, constectur adipiscing elit. Lorem ipsum dolor sit amet, constectur adipiscing elit.",
-      course: "IF1210 Dasar Pemrograman",
-    });
-    setIsLoading(false);
+    const fetchCourseInfo = async () => {
+      setIsLoading(true);
+      try {
+        interface CourseDetailResponse {
+          data: {
+            course: Course;
+          };
+        }
+        const response = (await axios.get(
+          `/api/course/${id}`
+        )) as CourseDetailResponse;
+
+        setCourse(response.data.course);
+      } catch (error) {
+        setCourse({
+          id: -1,
+          title: "",
+          description: "",
+          course: "",
+        });
+      }
+      setIsLoading(false);
+    };
+
+    fetchCourseInfo();
   }, [id]);
 
   if (isLoading) {
