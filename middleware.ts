@@ -22,7 +22,7 @@ export async function middleware(request: NextRequest) {
     }
 
     try {
-      const { payload } = await jwtVerify(
+      await jwtVerify(
         jwtToken.value,
         new TextEncoder().encode(process.env.JWT_SECRET!)
       );
