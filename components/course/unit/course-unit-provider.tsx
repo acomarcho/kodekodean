@@ -22,14 +22,31 @@ export default function CourseUnitProvider({ children, id }: Props) {
   const [isLoading, setIsLoading] = useState(true);
 
   useEffect(() => {
-    // TODO: Fetch course unit data
-    setCourseUnit({
-      id: 1,
-      title: "Paradigma fungsional dan Haskell",
-      rank: 1,
-      courseID: 1,
-    });
-    setIsLoading(false);
+    const fetchCourseUnitInfo = async () => {
+      setIsLoading(true);
+      try {
+        interface CourseUnitDetailResponse {
+          data: {
+            courseUnit: CourseUnit;
+          };
+        }
+        const response = (await axios.get(
+          `/api/course-unit/${id}`
+        )) as CourseUnitDetailResponse;
+
+        setCourseUnit(response.data.courseUnit);
+      } catch (error) {
+        setCourseUnit({
+          id: -1,
+          title: "",
+          rank: -1,
+          courseID: -1,
+        });
+      }
+      setIsLoading(false);
+    };
+
+    fetchCourseUnitInfo();
   }, [id]);
 
   if (isLoading) {
