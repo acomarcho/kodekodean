@@ -15,7 +15,7 @@ export async function GET(_: Request, { params }: Params) {
     let result: QueryResult<any>;
 
     // TODO: Return number of modules and completed modules
-    query = "SELECT id, title, rank, course_id FROM course_units WHERE course_id = $1";
+    query = "SELECT id, title, rank, course_id FROM course_units WHERE course_id = $1 ORDER BY rank ASC";
     values = [params.id];
     result = await conn!.query(query, values);
 
