@@ -23,5 +23,5 @@ CREATE TABLE IF NOT EXISTS course_unit_modules (
   title VARCHAR,
   description VARCHAR,
   rank VARCHAR,
-  course_unit_id INT REFERENCES course_units(course_id)
+  course_unit_id INT REFERENCES course_units(id)
 );
