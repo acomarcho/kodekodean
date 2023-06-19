@@ -21,6 +21,7 @@ export async function GET(_: Request, { params }: Params) {
       );
     }
 
+    // TODO: Add 'completed' to check if user has completed the module or not
     query =
       "SELECT id, title, description, rank, course_unit_id FROM course_unit_modules WHERE course_unit_id = $1 ORDER BY rank ASC";
     values = [parseInt(params.id)];
