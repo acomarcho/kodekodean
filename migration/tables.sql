@@ -17,3 +17,11 @@ CREATE TABLE IF NOT EXISTS course_units (
   title VARCHAR,
   course_id INT REFERENCES courses(id)
 );
+
+CREATE TABLE IF NOT EXISTS course_unit_modules (
+  id SERIAL PRIMARY KEY,
+  title VARCHAR,
+  description VARCHAR,
+  rank VARCHAR,
+  course_unit_id INT REFERENCES course_units(course_id)
+);
