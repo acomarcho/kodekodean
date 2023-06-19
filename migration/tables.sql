@@ -15,6 +15,7 @@ CREATE TABLE IF NOT EXISTS courses (
 CREATE TABLE IF NOT EXISTS course_units (
   id SERIAL PRIMARY KEY,
   title VARCHAR,
+  rank INT,
   course_id INT REFERENCES courses(id)
 );
 
