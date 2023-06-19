@@ -8,7 +8,7 @@ interface ModuleProps {
     id: number;
     title: string;
     description: string;
-    finished: boolean;
+    finished?: boolean;
     rank: number;
   };
 }
