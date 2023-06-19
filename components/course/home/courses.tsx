@@ -55,7 +55,7 @@ export default function Courses() {
 
   if (isLoading) {
     return (
-      <div className="w-[100%] flex flex-col justify-center items-center gap-[1rem]">
+      <div className="w-[100%] flex flex-col justify-center items-center gap-[1rem]  p-[1rem] lg:px-[2.5rem]">
         {contextHolder}
         <div>
           <Spin size="large" />
@@ -64,6 +64,7 @@ export default function Courses() {
       </div>
     );
   }
+
   return (
     <div className="p-[1rem] grid grid-cols-1 gap-[1rem] lg:px-[2.5rem] lg:grid-cols-2">
       {contextHolder}
