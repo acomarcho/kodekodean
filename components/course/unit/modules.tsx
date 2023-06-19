@@ -1,22 +1,29 @@
 "use client";
 
+import ModuleAccordion from "./module-accordion";
+
 export default function Modules() {
   const modules = [
     {
       id: 1,
       title: "Apa itu paradigma fungsional?",
+      description: "Lorem ipsum dolor sit amet, constectur adipiscing elit.",
       finished: true,
       rank: 1,
     },
     {
       id: 2,
       title: "Instalasi Haskell",
+      description:
+        "Cara melakukan instalasi compiler Haskell (GHCi) untuk memulai pemrograman dalam Haskell",
       finished: false,
       rank: 2,
     },
     {
       id: 3,
       title: "Program Haskell pertama Anda",
+      description:
+        "Lorem ipsum dolor sit amet, constectur adipiscing elit. Lorem ipsum dolor sit amet, constectur adipiscing elit.",
       finished: false,
       rank: 3,
     },
@@ -24,17 +31,8 @@ export default function Modules() {
 
   return (
     <div className="p-[1rem] flex flex-col gap-[1rem] lg:px-[2.5rem] lg:gap-[1.5rem]">
-      {modules.map(({ id, title, finished, rank }) => {
-        return (
-          <div className="p-[1rem] bg-dark-gray lg:p-[1.5rem]" key={id}>
-            <h1 className="text-white text-[1rem] font-bold lg:text-[2rem]">
-              <span className={`${finished ? "text-green" : "text-yellow"}`}>
-                {`#${rank}`}.{" "}
-              </span>
-              {title}
-            </h1>
-          </div>
-        );
+      {modules.map((module) => {
+        return <ModuleAccordion key={module.id} module={module} />;
       })}
     </div>
   );
