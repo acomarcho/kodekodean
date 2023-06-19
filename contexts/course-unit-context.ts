@@ -5,5 +5,5 @@ export const CourseUnitContext = createContext<CourseUnit>({
   id: -1,
   title: "",
   rank: -1,
-  courseID: -1,
+  course_id: -1,
 });

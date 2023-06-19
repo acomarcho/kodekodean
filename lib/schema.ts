@@ -16,5 +16,13 @@ export interface CourseUnit {
   id: number;
   title: string;
   rank: number;
-  courseID: number;
+  course_id: number;
+}
+
+export interface CourseUnitModule {
+  id: number;
+  title: string;
+  description: string;
+  rank: number;
+  course_unit_id: number;
 }

@@ -5,6 +5,7 @@ import { CourseContext } from "@/contexts/course-context";
 import axios, { AxiosError } from "axios";
 import { CourseUnit } from "@/lib/schema";
 import { notification, Spin } from "antd";
+import { useRouter } from "next/navigation";
 
 export default function Units() {
   const [isLoading, setIsLoading] = useState<boolean>(false);
@@ -12,6 +13,8 @@ export default function Units() {
   const course = useContext(CourseContext);
 
   const [api, contextHolder] = notification.useNotification();
+
+  const router = useRouter();
 
   useEffect(() => {
     const fetchCourseUnits = async () => {
@@ -57,6 +60,10 @@ export default function Units() {
     fetchCourseUnits();
   }, [api, course]);
 
+  const handleClick = (id: number) => {
+    router.push(`/course/unit/${id}`)
+  }
+
   if (isLoading) {
     return (
       <div className="w-[100%] flex flex-col justify-center items-center gap-[1rem] p-[1rem] lg:px-[2.5rem]">
@@ -98,7 +105,7 @@ export default function Units() {
               </p> */}
             </div>
             {/* Button */}
-            <button className="text-white border-2 border-white p-[1rem] font-bold transition-all hover:pointer hover:text-black hover:bg-white text-[1rem] lg:text-[1.25rem]">
+            <button className="text-white border-2 border-white p-[1rem] font-bold transition-all hover:pointer hover:text-black hover:bg-white text-[1rem] lg:text-[1.25rem]" onClick={() => handleClick(id)}>
               Eksplorasi
             </button>
           </div>
