@@ -17,7 +17,7 @@ export default function CourseUnitProvider({ children, id }: Props) {
     id: -1,
     title: "",
     rank: -1,
-    courseID: -1,
+    course_id: -1,
   });
   const [isLoading, setIsLoading] = useState(true);
 
@@ -40,7 +40,7 @@ export default function CourseUnitProvider({ children, id }: Props) {
           id: -1,
           title: "",
           rank: -1,
-          courseID: -1,
+          course_id: -1,
         });
       }
       setIsLoading(false);
