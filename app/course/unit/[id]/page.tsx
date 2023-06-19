@@ -2,6 +2,7 @@ import Wrapper from "@/components/common/wrapper";
 import AuthProvider from "@/components/common/auth-provider";
 import CourseUnitProvider from "@/components/course/unit/course-unit-provider";
 import Hero from "@/components/course/unit/hero";
+import Modules from "@/components/course/unit/modules";
 
 export const metadata = {
   title: "kodekodean.id - Course unit",
@@ -21,6 +22,7 @@ export default async function CourseUnitDetailPage({ params }: PageProps) {
         <CourseUnitProvider id={params.id}>
           <div className="min-h-screen">
             <Hero />
+            <Modules />
           </div>
         </CourseUnitProvider>
       </AuthProvider>
