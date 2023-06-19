@@ -28,9 +28,9 @@ export default function Modules() {
         return (
           <div className="p-[1rem] bg-dark-gray lg:p-[1.5rem]" key={id}>
             <h1 className="text-white text-[1rem] font-bold lg:text-[2rem]">
-              <span
-                className={`${finished ? "text-green" : "text-yellow"}`}
-              >{`#${rank}`}. </span>
+              <span className={`${finished ? "text-green" : "text-yellow"}`}>
+                {`#${rank}`}.{" "}
+              </span>
               {title}
             </h1>
           </div>
