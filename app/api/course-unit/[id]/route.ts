@@ -21,7 +21,7 @@ export async function GET(_: Request, { params }: Params) {
       );
     }
 
-    query = "SELECT id, title, course_id FROM course_units WHERE id = $1";
+    query = "SELECT id, title, rank, course_id FROM course_units WHERE id = $1";
     values = [parseInt(params.id)];
     result = await conn!.query(query, values);
 
