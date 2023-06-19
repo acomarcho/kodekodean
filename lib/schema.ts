@@ -11,3 +11,9 @@ export interface Course {
   description: string;
   course: string;
 }
+
+export interface CourseUnit {
+  id: number;
+  title: string;
+  courseID: number;
+}
