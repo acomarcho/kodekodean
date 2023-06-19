@@ -21,14 +21,14 @@ export default function Modules() {
       try {
         interface CourseUnitModuleResponse {
           data: {
-            courseModules: CourseUnitModule[];
+            unitModules: CourseUnitModule[];
           };
         }
 
         const response = (await axios.get(
           `/api/course-unit/modules/${courseUnit.id}`
         )) as CourseUnitModuleResponse;
-        setUnitModules(response.data.courseModules);
+        setUnitModules(response.data.unitModules);
 
         setIsLoading(false);
       } catch (error) {

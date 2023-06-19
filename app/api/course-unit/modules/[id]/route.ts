@@ -37,7 +37,7 @@ export async function GET(_: Request, { params }: Params) {
       );
     }
 
-    return NextResponse.json({ courseModules: result.rows }, { status: 200 });
+    return NextResponse.json({ unitModules: result.rows }, { status: 200 });
   } catch (error) {
     return NextResponse.json(
       { message: "Terjadi kesalahan pada server" },
