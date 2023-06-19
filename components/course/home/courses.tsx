@@ -4,12 +4,15 @@ import { useState, useEffect } from "react";
 import axios, { AxiosError } from "axios";
 import { Course } from "@/lib/schema";
 import { notification, Spin } from "antd";
+import { useRouter } from "next/navigation";
 
 export default function Courses() {
   const [isLoading, setIsLoading] = useState<boolean>(false);
   const [courses, setCourses] = useState<Course[]>([]);
 
   const [api, contextHolder] = notification.useNotification();
+
+  const router = useRouter();
 
   useEffect(() => {
     const fetchCourses = async () => {
@@ -53,9 +56,13 @@ export default function Courses() {
     fetchCourses();
   }, [api]);
 
+  const handleClick = (id: number) => {
+    router.push(`/course/${id}`);
+  };
+
   if (isLoading) {
     return (
-      <div className="w-[100%] flex flex-col justify-center items-center gap-[1rem]">
+      <div className="w-[100%] flex flex-col justify-center items-center gap-[1rem]  p-[1rem] lg:px-[2.5rem]">
         {contextHolder}
         <div>
           <Spin size="large" />
@@ -64,6 +71,7 @@ export default function Courses() {
       </div>
     );
   }
+
   return (
     <div className="p-[1rem] grid grid-cols-1 gap-[1rem] lg:px-[2.5rem] lg:grid-cols-2">
       {contextHolder}
@@ -87,7 +95,10 @@ export default function Courses() {
                 </p>
               </div>
               {/* Button */}
-              <button className="text-white border-2 border-white p-[1rem] font-bold transition-all hover:pointer hover:text-black hover:bg-white text-[1rem] lg:text-[1.25rem]">
+              <button
+                className="text-white border-2 border-white p-[1rem] font-bold transition-all hover:pointer hover:text-black hover:bg-white text-[1rem] lg:text-[1.25rem]"
+                onClick={() => handleClick(id)}
+              >
                 Mulai belajar
               </button>
             </div>
