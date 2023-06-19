@@ -22,6 +22,6 @@ CREATE TABLE IF NOT EXISTS course_unit_modules (
   id SERIAL PRIMARY KEY,
   title VARCHAR,
   description VARCHAR,
-  rank VARCHAR,
+  rank INT,
   course_unit_id INT REFERENCES course_units(id)
 );
