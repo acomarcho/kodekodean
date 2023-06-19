@@ -72,7 +72,7 @@ export default function Units() {
   return (
     <div className="p-[1rem] grid grid-cols-1 gap-[1rem] lg:px-[2.5rem] lg:grid-cols-2">
       {contextHolder}
-      {courseUnits.map(({ id, title }, idx) => {
+      {courseUnits.map(({ id, title, rank }) => {
         return (
           <div
             className="w-[100%] bg-dark-gray flex flex-col gap-[2rem] justify-between p-[1.5rem] lg:p-[2rem]"
@@ -81,7 +81,7 @@ export default function Units() {
             {/* Course information */}
             <div className="flex flex-col gap-[1rem]">
               <h1 className="text-white font-bold text-[1.25rem] lg:text-[1.75rem]">
-                Unit {idx + 1}
+                Unit {rank}
               </h1>
               <p className="text-light-gray text-[1rem] lg:text-[1.25rem]">
                 {title}

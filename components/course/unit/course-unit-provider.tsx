@@ -16,6 +16,7 @@ export default function CourseUnitProvider({ children, id }: Props) {
   const [courseUnit, setCourseUnit] = useState<CourseUnit>({
     id: -1,
     title: "",
+    rank: -1,
     courseID: -1,
   });
   const [isLoading, setIsLoading] = useState(true);
@@ -25,6 +26,7 @@ export default function CourseUnitProvider({ children, id }: Props) {
     setCourseUnit({
       id: 1,
       title: "Paradigma fungsional dan Haskell",
+      rank: 1,
       courseID: 1,
     });
     setIsLoading(false);

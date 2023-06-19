@@ -12,7 +12,7 @@ export default function Hero() {
       <div className="flex flex-col gap-[1rem] lg:w-[50%]">
         <div className="flex flex-col gap-[0rem] lg:gap-[1rem]">
           <h1 className="text-white text-[1.25rem] font-bold lg:text-[3rem] lg:leading-[3.625rem]">
-            {courseUnit.title || "Course unit tidak ditemukan"}
+            {`Unit ${courseUnit.rank}: ${courseUnit.title}` || "Course unit tidak ditemukan"}
           </h1>
           <p className="text-light-gray text-[1rem] lg:text-[1.25rem]">Anda sudah menyelesaikan 0/10 modul pada unit ini.</p>
         </div>

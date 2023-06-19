@@ -15,5 +15,6 @@ export interface Course {
 export interface CourseUnit {
   id: number;
   title: string;
+  rank: number;
   courseID: number;
 }
