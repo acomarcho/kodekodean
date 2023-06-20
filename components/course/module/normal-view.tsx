@@ -77,8 +77,10 @@ export default function NormalView() {
         </div>
       </div>
       {/* Content */}
-      <div className="p-[1rem]">
-        <ReactMarkdown rehypePlugins={[rehypeRaw]}>{content}</ReactMarkdown>
+      <div className="p-[1rem] bg-black min-h-[100vh] flex flex-col gap-[1rem]">
+        <ReactMarkdown className="mobile-markdown" rehypePlugins={[rehypeRaw]}>
+          {content}
+        </ReactMarkdown>
       </div>
     </>
   );
