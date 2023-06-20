@@ -63,13 +63,13 @@ export default function NormalView() {
                 return (
                   <button
                     key={chunk.id}
-                    className="p-[0.5rem] text-white text-left bg-none border-2 border-white transition-all pointer hover:bg-white hover:text-black"
+                    className="px-[1rem] py-[0.5rem] text-white text-left bg-none border-2 border-white transition-all pointer hover:bg-white hover:text-black"
                   >
                     {`${chunk.rank}. ${chunk.title}`}
                   </button>
                 );
               })}
-              <button className="p-[0.5rem] text-white text-left bg-none border-2 border-white transition-all pointer hover:bg-white hover:text-black">
+              <button className="px-[1rem] py-[0.5rem] text-white text-left bg-none border-2 border-white transition-all pointer hover:bg-white hover:text-black">
                 Keluar dari modul
               </button>
             </div>
@@ -81,6 +81,15 @@ export default function NormalView() {
         <ReactMarkdown className="mobile-markdown" rehypePlugins={[rehypeRaw]}>
           {content}
         </ReactMarkdown>
+        {/* Buttons */}
+        <div className="flex justify-between">
+          <button className="bg-none px-[1rem] py-[0.5rem] text-white font-bold border-2 border-white pointer transition-all hover:bg-white hover:text-black">
+            Kembali
+          </button>
+          <button className="bg-primary px-[1rem] py-[0.5rem] text-white font-bold pointer transition-all hover:bg-primary-hover">
+            Lanjut
+          </button>
+        </div>
       </div>
     </>
   );
