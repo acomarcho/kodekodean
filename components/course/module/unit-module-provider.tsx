@@ -18,6 +18,7 @@ export default function UnitModuleProvider({ children, id }: Props) {
     rank: -1,
     course_unit_id: -1,
   });
+  const [chunks, setChunks] = useState<any[]>([]);
   const [isLoading, setIsLoading] = useState(true);
 
   useEffect(() => {
@@ -29,6 +30,18 @@ export default function UnitModuleProvider({ children, id }: Props) {
       rank: 1,
       course_unit_id: 1,
     });
+    setChunks([
+      {
+        id: 1,
+        title: "Pendahuluan",
+        rank: 1,
+      },
+      {
+        id: 2,
+        title: "Perbedaan dengan  paradigma prosedural",
+        rank: 2,
+      },
+    ]);
     setIsLoading(false);
   }, []);
 
@@ -44,7 +57,7 @@ export default function UnitModuleProvider({ children, id }: Props) {
   }
 
   return (
-    <UnitModuleContext.Provider value={unitModule}>
+    <UnitModuleContext.Provider value={{ unitModule, chunks }}>
       {children}
     </UnitModuleContext.Provider>
   );

@@ -5,7 +5,7 @@ import { useContext } from "react";
 import { UnitModuleContext } from "@/contexts/unit-module-context";
 
 export default function NormalView() {
-  const unitModule = useContext(UnitModuleContext);
+  const { unitModule, chunks } = useContext(UnitModuleContext);
 
   return (
     <>
