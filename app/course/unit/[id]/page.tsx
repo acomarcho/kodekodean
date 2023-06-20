@@ -3,6 +3,7 @@ import AuthProvider from "@/components/common/auth-provider";
 import CourseUnitProvider from "@/components/course/unit/course-unit-provider";
 import Hero from "@/components/course/unit/hero";
 import Modules from "@/components/course/unit/modules";
+import Navbar from "@/components/common/navbar";
 
 export const metadata = {
   title: "kodekodean.id - Course unit",
@@ -17,15 +18,18 @@ interface PageProps {
 
 export default async function CourseUnitDetailPage({ params }: PageProps) {
   return (
-    <Wrapper>
-      <AuthProvider requireLogin={true} redirectTo={"/login"}>
-        <CourseUnitProvider id={params.id}>
-          <div className="min-h-screen">
-            <Hero />
-            <Modules />
-          </div>
-        </CourseUnitProvider>
-      </AuthProvider>
-    </Wrapper>
+    <>
+      <Navbar />
+      <Wrapper>
+        <AuthProvider requireLogin={true} redirectTo={"/login"}>
+          <CourseUnitProvider id={params.id}>
+            <div className="min-h-screen">
+              <Hero />
+              <Modules />
+            </div>
+          </CourseUnitProvider>
+        </AuthProvider>
+      </Wrapper>
+    </>
   );
 }
