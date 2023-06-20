@@ -1,7 +1,7 @@
 "use client";
 
 import Image from "next/image";
-import { useContext, useState } from "react";
+import { useContext, useState, useRef, useEffect } from "react";
 import { UnitModuleContext } from "@/contexts/unit-module-context";
 import ReactMarkdown from "react-markdown";
 import rehypeRaw from "rehype-raw";
@@ -9,6 +9,17 @@ import rehypeRaw from "rehype-raw";
 export default function NormalView() {
   const { unitModule, chunks } = useContext(UnitModuleContext);
   const [isOpen, setIsOpen] = useState<boolean>(false);
+
+  const navbarRef = useRef<HTMLDivElement>(null);
+  const contentRef = useRef<HTMLDivElement>(null);
+
+  useEffect(() => {
+    if (navbarRef.current && contentRef.current) {
+      contentRef.current.style.paddingTop = `calc(${
+        navbarRef.current.getBoundingClientRect().height
+      }px + 1rem)`;
+    }
+  }, []);
 
   const content = `# 1. Pendahuluan
   
@@ -27,7 +38,10 @@ export default function NormalView() {
   return (
     <>
       {/* Navigation bar */}
-      <div className="p-[1rem] bg-dark-gray flex justify-between items-center">
+      <div
+        className="p-[1rem] bg-dark-gray flex justify-between items-center fixed top-0 left-0 right-0"
+        ref={navbarRef}
+      >
         <button
           className={`pointer transition-all ${
             !isOpen ? "rotate-0" : "rotate-90"
@@ -77,7 +91,10 @@ export default function NormalView() {
         </div>
       </div>
       {/* Content */}
-      <div className="p-[1rem] bg-black min-h-[100vh] flex flex-col gap-[1rem]">
+      <div
+        className="p-[1rem] bg-black min-h-[100vh] flex flex-col gap-[1rem]"
+        ref={contentRef}
+      >
         <ReactMarkdown className="mobile-markdown" rehypePlugins={[rehypeRaw]}>
           {content}
         </ReactMarkdown>
