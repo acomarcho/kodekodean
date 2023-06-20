@@ -39,13 +39,13 @@ export default function AuthProvider({
         if (user) {
           setUser(user);
           if (requireGuest) {
-            router.push(redirectTo!);
+            router.replace(redirectTo!);
           } else {
             setIsLoading(false);
           }
         } else {
           if (requireLogin) {
-            router.push(redirectTo!);
+            router.replace(redirectTo!);
           } else {
             setIsLoading(false);
           }
