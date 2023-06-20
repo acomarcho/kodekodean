@@ -5,8 +5,17 @@ import { AuthContext } from "@/contexts/auth-context";
 import Image from "next/image";
 import Link from "next/link";
 
+import axios from "axios";
+import { useRouter } from "next/navigation";
+
 export default function Navbar() {
   const user = useContext(AuthContext);
+  const router = useRouter();
+
+  const handleLogOut = async () => {
+    await axios.post("/api/logout");
+    router.push("/");
+  };
 
   return (
     <div className="fixed top-0 left-0 right-0 bg-black">
@@ -22,7 +31,10 @@ export default function Navbar() {
             />
           </Link>
           {user.id !== -1 && (
-            <button className="text-white border-2 border-white px-[1rem] py-[0.5rem] font-bold transition-all hover:pointer hover:text-black hover:bg-white text-[1rem] lg:text-[1.25rem]">
+            <button
+              className="text-white border-2 border-white px-[1rem] py-[0.5rem] font-bold transition-all hover:pointer hover:text-black hover:bg-white text-[1rem] lg:text-[1.25rem]"
+              onClick={() => handleLogOut()}
+            >
               Keluar
             </button>
           )}
