@@ -8,10 +8,6 @@ export default function NormalView() {
   const { unitModule, chunks } = useContext(UnitModuleContext);
   const [isOpen, setIsOpen] = useState<boolean>(false);
 
-  const handleOpen = () => {
-    setIsOpen((oldIsOpen) => !oldIsOpen);
-  };
-
   return (
     <>
       {/* Navigation bar */}
@@ -20,7 +16,7 @@ export default function NormalView() {
           className={`pointer transition-all ${
             !isOpen ? "rotate-0" : "rotate-90"
           }`}
-          onClick={() => handleOpen()}
+          onClick={() => setIsOpen((oldIsOpen) => !oldIsOpen)}
         >
           <Image
             src="/icons/hamburger.png"
@@ -33,21 +29,31 @@ export default function NormalView() {
           {`${unitModule.rank}. ${unitModule.title}`}
         </h1>
         {/* Overlay*/}
-        <div className="fixed top-0 left-0 w-[100vw] h-[100vh] bg-transparent z-[2]">
+        <div
+          className={`fixed top-0 left-0 transition-all w-[100vw] h-[100vh] bg-transparent z-[2] ${
+            !isOpen ? "translate-x-[-100%]" : "translate-x-0"
+          }`}
+          onClick={() => {
+            setIsOpen(false);
+          }}
+        >
           {/* Sidebar */}
-          <div className="fixed top-0 left-0 w-[50%] h-[100vh] bg-dark-gray p-[1rem] z-[3]">
+          <div
+            className="fixed top-0 left-0 w-[50%] h-[100vh] bg-dark-gray p-[1rem] z-[3]"
+            onClick={(e) => e.stopPropagation()}
+          >
             <div className="flex flex-col gap-[1rem]">
               {chunks.map((chunk) => {
                 return (
                   <button
                     key={chunk.id}
-                    className="p-[0.5rem] text-white bg-none border-2 border-white transition-all pointer hover:bg-white hover:text-black"
+                    className="p-[0.5rem] text-white text-left bg-none border-2 border-white transition-all pointer hover:bg-white hover:text-black"
                   >
                     {`${chunk.rank}. ${chunk.title}`}
                   </button>
                 );
               })}
-              <button className="p-[0.5rem] text-white bg-none border-2 border-white transition-all pointer hover:bg-white hover:text-black">
+              <button className="p-[0.5rem] text-white text-left bg-none border-2 border-white transition-all pointer hover:bg-white hover:text-black">
                 Keluar dari modul
               </button>
             </div>
