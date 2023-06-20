@@ -25,6 +25,21 @@ export default function DesktopView() {
           </div>
         </div>
       </div>
+      {/* Sidebar */}
+      <div className="fixed top-[7.5rem] left-[2rem]">
+        <div className="flex flex-col gap-[1rem]">
+          {chunks.map((chunk) => {
+            return (
+              <button
+                key={chunk.id}
+                className="p-[1.5rem] bg-dark-gray font-bold text-white text-[1.25rem] pointer transition-all max-w-[200px] hover:bg-[#000000]"
+              >
+                {`${chunk.rank}. ${chunk.title}`}
+              </button>
+            );
+          })}
+        </div>
+      </div>
     </>
   );
 }
