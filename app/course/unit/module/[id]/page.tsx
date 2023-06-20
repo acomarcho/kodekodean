@@ -1,9 +1,7 @@
-import Wrapper from "@/components/common/wrapper";
 import AuthProvider from "@/components/common/auth-provider";
 import UnitModuleProvider from "@/components/course/module/unit-module-provider";
-import Hero from "@/components/course/unit/hero";
-import Modules from "@/components/course/unit/modules";
-import Navbar from "@/components/common/navbar";
+import NormalView from "@/components/course/module/normal-view";
+import DesktopView from "@/components/course/module/desktop-view";
 
 export const metadata = {
   title: "kodekodean.id - Unit module",
@@ -20,7 +18,12 @@ export default async function ModuleDetailPage({ params }: PageProps) {
   return (
     <AuthProvider requireLogin={true} redirectTo={"/login"}>
       <UnitModuleProvider id={params.id}>
-        <p>Hello world!</p>
+        <div className="lg:hidden">
+          <NormalView />
+        </div>
+        <div className="hidden lg:block">
+          <DesktopView />
+        </div>
       </UnitModuleProvider>
     </AuthProvider>
   );
