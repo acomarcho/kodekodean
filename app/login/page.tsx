@@ -10,13 +10,11 @@ export const metadata = {
 
 export default async function LoginPage() {
   return (
-    <>
+    <AuthProvider requireGuest={true} redirectTo={"/course"}>
       <Navbar />
       <Wrapper>
-        <AuthProvider requireGuest={true} redirectTo={"/course"}>
-          <Login />
-        </AuthProvider>
+        <Login />
       </Wrapper>
-    </>
+    </AuthProvider>
   );
 }

@@ -11,16 +11,14 @@ export const metadata = {
 
 export default async function CoursePage() {
   return (
-    <>
+    <AuthProvider requireLogin={true} redirectTo={"/login"}>
       <Navbar />
       <Wrapper>
-        <AuthProvider requireLogin={true} redirectTo={"/login"}>
-          <div className="min-h-screen">
-            <Hero />
-            <Courses />
-          </div>
-        </AuthProvider>
+        <div className="min-h-screen">
+          <Hero />
+          <Courses />
+        </div>
       </Wrapper>
-    </>
+    </AuthProvider>
   );
 }

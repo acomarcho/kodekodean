@@ -61,7 +61,7 @@ export default function AuthProvider({
 
   if (isLoading) {
     return (
-      <div className="h-[100vh] flex flex-col justify-center items-center gap-[1rem]">
+      <div className="h-[100vh] flex flex-col justify-center items-center gap-[1rem] bg-black">
         <div>
           <Spin size="large" />
         </div>

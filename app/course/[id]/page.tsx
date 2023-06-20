@@ -18,18 +18,16 @@ interface PageProps {
 
 export default async function CourseDetailPage({ params }: PageProps) {
   return (
-    <>
+    <AuthProvider requireLogin={true} redirectTo={"/login"}>
       <Navbar />
       <Wrapper>
-        <AuthProvider requireLogin={true} redirectTo={"/login"}>
-          <CourseProvider id={params.id}>
-            <div className="min-h-screen">
-              <Hero />
-              <Units />
-            </div>
-          </CourseProvider>
-        </AuthProvider>
+        <CourseProvider id={params.id}>
+          <div className="min-h-screen">
+            <Hero />
+            <Units />
+          </div>
+        </CourseProvider>
       </Wrapper>
-    </>
+    </AuthProvider>
   );
 }
