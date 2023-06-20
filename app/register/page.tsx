@@ -1,6 +1,7 @@
 import Wrapper from "@/components/common/wrapper";
 import Register from "@/components/register/register";
 import AuthProvider from "@/components/common/auth-provider";
+import Navbar from "@/components/common/navbar";
 
 export const metadata = {
   title: "kodekodean.id - Register",
@@ -9,10 +10,11 @@ export const metadata = {
 
 export default async function RegisterPage() {
   return (
-    <Wrapper>
-      <AuthProvider requireGuest={true} redirectTo={"/course"}>
+    <AuthProvider requireGuest={true} redirectTo={"/course"}>
+      <Navbar />
+      <Wrapper>
         <Register />
-      </AuthProvider>
-    </Wrapper>
+      </Wrapper>
+    </AuthProvider>
   );
 }
