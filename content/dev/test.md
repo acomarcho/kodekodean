@@ -1,5 +1,3 @@
-# 1. Pendahuluan
-  
 ## Video
 
 <iframe src="https://www.youtube.com/embed/RBqWwm2eEq0"></iframe>

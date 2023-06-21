@@ -25,29 +25,19 @@ export default function UnitModuleProvider({ children, id }: Props) {
   useEffect(() => {
     const fetchUnitModuleInfo = async () => {
       setIsLoading(true);
+
       try {
-        interface UnitModuleDetailResposne {
+        interface UnitModuleDetailResponse {
           data: {
             unitModule: CourseUnitModule;
           };
         }
 
-        interface UnitModuleChunksResponse {
-          data: {
-            moduleChunks: CourseUnitModuleChunk[];
-          };
-        }
-
         const unitModuleDetailResponse = (await axios.get(
           `/api/unit-module/${id}`
-        )) as UnitModuleDetailResposne;
-
-        const unitModuleChunksResponse = (await axios.get(
-          `/api/unit-module/chunks/${id}`
-        )) as UnitModuleChunksResponse;
+        )) as UnitModuleDetailResponse;
 
         setUnitModule(unitModuleDetailResponse.data.unitModule);
-        setChunks(unitModuleChunksResponse.data.moduleChunks);
       } catch (error) {
         setUnitModule({
           id: -1,
@@ -56,8 +46,24 @@ export default function UnitModuleProvider({ children, id }: Props) {
           rank: -1,
           course_unit_id: -1,
         });
+      }
+
+      try {
+        interface UnitModuleChunksResponse {
+          data: {
+            moduleChunks: CourseUnitModuleChunk[];
+          };
+        }
+
+        const unitModuleChunksResponse = (await axios.get(
+          `/api/unit-module/chunks/${id}`
+        )) as UnitModuleChunksResponse;
+
+        setChunks(unitModuleChunksResponse.data.moduleChunks);
+      } catch (error) {
         setChunks([]);
       }
+
       setIsLoading(false);
     };
 
