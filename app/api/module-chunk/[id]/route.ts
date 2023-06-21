@@ -39,12 +39,9 @@ export async function GET(_: Request, { params }: Params) {
 
     // Read file
     try {
-      content = await fs.readFile(
-        `${process.cwd()}${moduleChunk.content_path}`,
-        {
-          encoding: "utf-8",
-        }
-      );
+      content = await fs.readFile(`/app${moduleChunk.content_path}`, {
+        encoding: "utf-8",
+      });
     } catch (error) {
       console.log(error);
       return NextResponse.json(
