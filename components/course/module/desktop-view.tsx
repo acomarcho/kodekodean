@@ -1,13 +1,24 @@
 "use client";
 
 import Image from "next/image";
-import { useContext } from "react";
+import { useContext, useState, useEffect, useRef } from "react";
 import { UnitModuleContext } from "@/contexts/unit-module-context";
 import ReactMarkdown from "react-markdown";
 import rehypeRaw from "rehype-raw";
 
 export default function DesktopView() {
   const { unitModule, chunks } = useContext(UnitModuleContext);
+
+  const [navbarHeight, setNavbarHeight] = useState<number>(0);
+  const navbarRef = useRef<HTMLDivElement>(null);
+
+  useEffect(() => {
+    if (!navbarRef.current?.clientHeight) {
+      return;
+    }
+
+    setNavbarHeight(navbarRef.current?.clientHeight);
+  }, []);
 
   const content = `# 1. Pendahuluan
   
@@ -26,7 +37,10 @@ export default function DesktopView() {
   return (
     <>
       {/* Navbar */}
-      <div className="fixed top-0 left-0 right-0 bg-dark-gray z-[2]">
+      <div
+        className="fixed top-0 left-0 right-0 bg-dark-gray z-[2]"
+        ref={navbarRef}
+      >
         <div className="max-w-[1280px] mx-auto p-[1rem] px-[2.5rem]">
           <div className="flex items-center gap-[2rem]">
             <button className="pointer">
@@ -42,7 +56,13 @@ export default function DesktopView() {
         </div>
       </div>
       {/* Sidebar */}
-      <div className="fixed top-[7.5rem] left-[2rem] z-[2]">
+      <div
+        className="fixed left-[2rem] z-[2] overflow-y-scroll"
+        style={{
+          top: `${navbarHeight + 32}px`,
+          maxHeight: `calc(100vh - ${navbarHeight + 32}px - 32px)`,
+        }}
+      >
         <div className="flex flex-col gap-[1rem]">
           {chunks.map((chunk) => {
             return (
@@ -57,7 +77,12 @@ export default function DesktopView() {
         </div>
       </div>
       {/* Content */}
-      <div className="p-[2rem] bg-dark-gray absolute top-[7.5rem] left-[50%] translate-x-[-50%] w-[40rem]">
+      <div
+        className="p-[2rem] bg-dark-gray absolute left-[50%] translate-x-[-50%] w-[40rem]"
+        style={{
+          top: `${navbarHeight + 32}px`,
+        }}
+      >
         <ReactMarkdown className="mobile-markdown" rehypePlugins={[rehypeRaw]}>
           {content}
         </ReactMarkdown>
