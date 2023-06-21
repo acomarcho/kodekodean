@@ -1,10 +1,10 @@
 import { createContext } from "react";
-import { CourseUnitModule } from "@/lib/schema";
+import { CourseUnitModule, CourseUnitModuleChunk } from "@/lib/schema";
 
 // TODO: Define chunk structure
 export interface IUnitModuleContext {
   unitModule: CourseUnitModule;
-  chunks: any[];
+  chunks: CourseUnitModuleChunk[];
 }
 
 export const UnitModuleContext = createContext<IUnitModuleContext>({
