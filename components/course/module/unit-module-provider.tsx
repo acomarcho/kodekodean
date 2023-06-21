@@ -41,6 +41,26 @@ export default function UnitModuleProvider({ children, id }: Props) {
         title: "Perbedaan dengan  paradigma prosedural",
         rank: 2,
       },
+      {
+        id: 3,
+        title: "Chunk #3",
+        rank: 3,
+      },
+      {
+        id: 4,
+        title: "Chunk #4",
+        rank: 4,
+      },
+      {
+        id: 5,
+        title: "Chunk #5",
+        rank: 5,
+      },
+      {
+        id: 5,
+        title: "Chunk #6",
+        rank: 6,
+      },
     ]);
     setIsLoading(false);
   }, []);

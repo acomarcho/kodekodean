@@ -10,15 +10,16 @@ export default function NormalView() {
   const { unitModule, chunks } = useContext(UnitModuleContext);
   const [isOpen, setIsOpen] = useState<boolean>(false);
 
+  const [navbarHeight, setNavbarHeight] = useState<number>(0);
+
   const navbarRef = useRef<HTMLDivElement>(null);
-  const contentRef = useRef<HTMLDivElement>(null);
 
   useEffect(() => {
-    if (navbarRef.current && contentRef.current) {
-      contentRef.current.style.paddingTop = `calc(${
-        navbarRef.current.getBoundingClientRect().height
-      }px + 1rem)`;
+    if (!navbarRef.current?.clientHeight) {
+      return;
     }
+
+    setNavbarHeight(navbarRef.current?.clientHeight);
   }, []);
 
   const content = `# 1. Pendahuluan
@@ -93,7 +94,9 @@ export default function NormalView() {
       {/* Content */}
       <div
         className="p-[1rem] bg-black min-h-[100vh] flex flex-col gap-[1rem]"
-        ref={contentRef}
+        style={{
+          paddingTop: `${navbarHeight + 16}px`,
+        }}
       >
         <ReactMarkdown className="mobile-markdown" rehypePlugins={[rehypeRaw]}>
           {content}
