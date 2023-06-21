@@ -30,7 +30,7 @@ CREATE TABLE IF NOT EXISTS course_unit_modules (
 CREATE TABLE IF NOT EXISTS course_unit_module_chunks (
   id SERIAL PRIMARY KEY,
   title VARCHAR,
+  content_path VARCHAR,
   rank INT,
-  content VARCHAR,
   unit_module_id INT REFERENCES course_unit_modules(id)
 );
