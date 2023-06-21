@@ -5,13 +5,23 @@ import { useContext, useState, useRef, useEffect } from "react";
 import { UnitModuleContext } from "@/contexts/unit-module-context";
 import ReactMarkdown from "react-markdown";
 import rehypeRaw from "rehype-raw";
+import { ViewProps } from "./chunk-provider";
+import { Spin } from "antd";
+import { useRouter } from "next/navigation";
 
-export default function NormalView() {
+export default function NormalView({
+  isLoading,
+  chunkIndex,
+  setChunkIndex,
+  chunk,
+}: ViewProps) {
   const { unitModule, chunks } = useContext(UnitModuleContext);
   const [isOpen, setIsOpen] = useState<boolean>(false);
 
   const [navbarHeight, setNavbarHeight] = useState<number>(0);
   const navbarRef = useRef<HTMLDivElement>(null);
+
+  const router = useRouter();
 
   useEffect(() => {
     if (!navbarRef.current?.clientHeight) {
@@ -21,20 +31,30 @@ export default function NormalView() {
     setNavbarHeight(navbarRef.current?.clientHeight);
   }, []);
 
-  const content = `# 1. Pendahuluan
-  
-  ## Video
-  
-  <iframe src="https://www.youtube.com/embed/RBqWwm2eEq0"></iframe>
-  
-  ## Teks
+  const handleNextClick = () => {
+    if (chunkIndex >= chunks.length - 1) {
+      // TODO: Mark user has finished the module
+      router.back();
+    }
 
-  Lorem ipsum dolor sit amet, consectetur adipiscing elit. Maecenas placerat, lectus quis suscipit dapibus, nibh mi ali quam arcu, in commodo sapien enim vitae magna. Quisque dictum egestas est. Ut molestie est libero, sed egestas leo viverra et. Sed tristique, velit congue pharetra posuere, nulla elit luctus lorem, at lacinia sapien urna ut diam. Quisque nunc sapien, mattis eget dolor in, pulvinar rhoncus dolor. Aliquam id aliquam libero, vel feugiat lectus. Etiam aliquet, massa vel molestie cursus, velit elit rutrum diam, et scelerisque urna orci a ipsum. Praesent ultricies mi nec odio semper faucibus. 
-  
-  ![Test image](https://upload.wikimedia.org/wikipedia/commons/2/29/Postgresql_elephant.svg)
-  
-  Nulla diam nunc, pulvinar nec hendrerit sed, dignissim non ipsum. Fusce porta lacus at cursus lacinia. Nulla facilisi. Morbi vitae condimentum quam. Etiam at egestas massa, blandit consectetur elit. Pellentesque condimentum posuere vestibulum. Praesent aliquam ac libero at laoreet.  
-  `;
+    setChunkIndex((oldChunkIndex) => oldChunkIndex + 1);
+  };
+
+  const handlePreviousClick = () => {
+    if (chunkIndex === 0) {
+      router.back();
+    }
+
+    setChunkIndex((oldChunkIndex) => oldChunkIndex - 1);
+  };
+
+  const handleSidebarClick = (idx: number) => {
+    if (chunkIndex === idx) {
+      return;
+    }
+
+    setChunkIndex(idx);
+  };
 
   return (
     <>
@@ -53,11 +73,11 @@ export default function NormalView() {
             src="/icons/hamburger.png"
             alt="Hamburger icon"
             width={32}
-            height={27.75}
+            height={28}
           />
         </button>
         <h1 className="w-[60%] text-white text-right font-bold text-[1.25rem]">
-          {`${unitModule.rank}. ${unitModule.title}`}
+          {unitModule.rank !== -1 ? `${unitModule.rank}. ${unitModule.title}` : `Modul tidak ditemukan`}
         </h1>
         {/* Overlay*/}
         <div
@@ -74,17 +94,29 @@ export default function NormalView() {
             onClick={(e) => e.stopPropagation()}
           >
             <div className="flex flex-col gap-[1rem]">
-              {chunks.map((chunk) => {
+              {chunks.map((chunk, idx) => {
                 return (
                   <button
                     key={chunk.id}
-                    className="px-[1rem] py-[0.5rem] text-white text-left bg-none border-2 border-white transition-all pointer hover:bg-white hover:text-black"
+                    className={`px-[1rem] py-[0.5rem] text-white text-left ${
+                      idx <= chunkIndex
+                        ? "bg-primary"
+                        : "bg-none border-2 border-white"
+                    } transition-all pointer ${
+                      idx <= chunkIndex
+                        ? "hover:bg-primary-hover"
+                        : "hover:bg-white hover:text-black"
+                    }`}
+                    onClick={() => handleSidebarClick(idx)}
                   >
                     {`${chunk.rank}. ${chunk.title}`}
                   </button>
                 );
               })}
-              <button className="px-[1rem] py-[0.5rem] text-white text-left bg-none border-2 border-white transition-all pointer hover:bg-white hover:text-black">
+              <button
+                className="px-[1rem] py-[0.5rem] text-white text-left bg-none border-2 border-white transition-all pointer hover:bg-white hover:text-black"
+                onClick={() => router.back()}
+              >
                 Keluar dari modul
               </button>
             </div>
@@ -98,18 +130,39 @@ export default function NormalView() {
           paddingTop: `${navbarHeight + 16}px`,
         }}
       >
-        <ReactMarkdown className="mobile-markdown" rehypePlugins={[rehypeRaw]}>
-          {content}
-        </ReactMarkdown>
-        {/* Buttons */}
-        <div className="flex justify-between">
-          <button className="bg-none px-[1rem] py-[0.5rem] text-white font-bold border-2 border-white pointer transition-all hover:bg-white hover:text-black">
-            Kembali
-          </button>
-          <button className="bg-primary px-[1rem] py-[0.5rem] text-white font-bold pointer transition-all hover:bg-primary-hover">
-            Lanjut
-          </button>
-        </div>
+        {!isLoading && (
+          <>
+            <ReactMarkdown
+              className="mobile-markdown"
+              rehypePlugins={[rehypeRaw]}
+            >
+              {chunk.title
+                ? `# ${chunk.rank}. ${chunk.title}\n\n${chunk.content}`
+                : "Konten tidak ditemukan"}
+            </ReactMarkdown>
+            {/* Buttons */}
+            <div className="flex justify-between">
+              <button
+                className="bg-none px-[1rem] py-[0.5rem] text-white font-bold border-2 border-white pointer transition-all hover:bg-white hover:text-black"
+                onClick={handlePreviousClick}
+              >
+                Kembali
+              </button>
+              <button
+                className="bg-primary px-[1rem] py-[0.5rem] text-white font-bold pointer transition-all hover:bg-primary-hover"
+                onClick={handleNextClick}
+              >
+                {chunkIndex >= chunks.length - 1 ? "Selesai" : "Lanjut"}
+              </button>
+            </div>
+          </>
+        )}
+        {isLoading && (
+          <div className="flex flex-col gap-[1rem] items-center justify-center">
+            <Spin size="large" />
+            <p className="text-white font-bold text-[2rem]">Loading ...</p>
+          </div>
+        )}
       </div>
     </>
   );
