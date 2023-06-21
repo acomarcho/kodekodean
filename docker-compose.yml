@@ -10,6 +10,7 @@ services:
       - ./public:/app/public
       - ./lib:/app/lib
       - ./contexts:/app/contexts
+      - ./content:/app/content
   db:
     image: postgres:14.1-alpine
     restart: always
