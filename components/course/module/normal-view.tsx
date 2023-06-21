@@ -77,7 +77,7 @@ export default function NormalView({
           />
         </button>
         <h1 className="w-[60%] text-white text-right font-bold text-[1.25rem]">
-          {unitModule.rank !== -1 ? `${unitModule.rank}. ${unitModule.title}` : `Modul ${unitModule.rank} tidak ditemukan`}
+          {unitModule.rank !== -1 ? `${unitModule.rank}. ${unitModule.title}` : `Modul tidak ditemukan`}
         </h1>
         {/* Overlay*/}
         <div

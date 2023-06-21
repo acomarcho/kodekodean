@@ -75,7 +75,7 @@ export default function DesktopView({
             <h1 className="text-white font-bold text-[2rem]">
               {unitModule.rank !== -1
                 ? `${unitModule.rank}. ${unitModule.title}`
-                : `Modul ${unitModule.rank} tidak ditemukan`}
+                : `Modul tidak ditemukan`}
             </h1>
           </div>
         </div>
