@@ -53,7 +53,7 @@ export default function NormalView() {
             src="/icons/hamburger.png"
             alt="Hamburger icon"
             width={32}
-            height={27.75}
+            height={28}
           />
         </button>
         <h1 className="w-[60%] text-white text-right font-bold text-[1.25rem]">
