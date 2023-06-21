@@ -2,7 +2,13 @@ import { NextResponse } from "next/server";
 import type { NextRequest } from "next/server";
 import { jwtVerify } from "jose";
 
-const authenticatedAPIs = ["/api/course"];
+const authenticatedAPIs = [
+  "/api/course",
+  "/api/course-unit",
+  "/api/logout",
+  "/api/module-chunk",
+  "/api/unit-module",
+];
 
 export async function middleware(request: NextRequest) {
   const route = authenticatedAPIs.find((route) =>
@@ -26,7 +32,7 @@ export async function middleware(request: NextRequest) {
         jwtToken.value,
         new TextEncoder().encode(process.env.JWT_SECRET!)
       );
-      
+
       return NextResponse.next();
     } catch (error) {
       return NextResponse.json(
