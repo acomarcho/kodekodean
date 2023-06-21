@@ -10,24 +10,25 @@ export default function NormalView() {
   const { unitModule, chunks } = useContext(UnitModuleContext);
   const [isOpen, setIsOpen] = useState<boolean>(false);
 
+  const [navbarHeight, setNavbarHeight] = useState<number>(0);
   const navbarRef = useRef<HTMLDivElement>(null);
-  const contentRef = useRef<HTMLDivElement>(null);
 
   useEffect(() => {
-    if (navbarRef.current && contentRef.current) {
-      contentRef.current.style.paddingTop = `calc(${
-        navbarRef.current.getBoundingClientRect().height
-      }px + 1rem)`;
+    if (!navbarRef.current?.clientHeight) {
+      return;
     }
+
+    setNavbarHeight(navbarRef.current?.clientHeight);
   }, []);
 
   const content = `# 1. Pendahuluan
   
   ## Video
   
-  <iframe src="https://www.youtube.com/embed/RBqWwm2eEq0"/>
+  <iframe src="https://www.youtube.com/embed/RBqWwm2eEq0"></iframe>
   
   ## Teks
+
   Lorem ipsum dolor sit amet, consectetur adipiscing elit. Maecenas placerat, lectus quis suscipit dapibus, nibh mi ali quam arcu, in commodo sapien enim vitae magna. Quisque dictum egestas est. Ut molestie est libero, sed egestas leo viverra et. Sed tristique, velit congue pharetra posuere, nulla elit luctus lorem, at lacinia sapien urna ut diam. Quisque nunc sapien, mattis eget dolor in, pulvinar rhoncus dolor. Aliquam id aliquam libero, vel feugiat lectus. Etiam aliquet, massa vel molestie cursus, velit elit rutrum diam, et scelerisque urna orci a ipsum. Praesent ultricies mi nec odio semper faucibus. 
   
   ![Test image](https://upload.wikimedia.org/wikipedia/commons/2/29/Postgresql_elephant.svg)
@@ -93,7 +94,9 @@ export default function NormalView() {
       {/* Content */}
       <div
         className="p-[1rem] bg-black min-h-[100vh] flex flex-col gap-[1rem]"
-        ref={contentRef}
+        style={{
+          paddingTop: `${navbarHeight + 16}px`,
+        }}
       >
         <ReactMarkdown className="mobile-markdown" rehypePlugins={[rehypeRaw]}>
           {content}
