@@ -1,6 +1,12 @@
 "use client";
 
-import { useState, useEffect, useContext } from "react";
+import {
+  useState,
+  useEffect,
+  useContext,
+  Dispatch,
+  SetStateAction,
+} from "react";
 import { UnitModuleContext } from "@/contexts/unit-module-context";
 import NormalView from "./normal-view";
 import DesktopView from "./desktop-view";
@@ -13,6 +19,13 @@ export interface Chunk {
   rank: number;
   unit_module_id: number;
   content: string;
+}
+
+export interface ViewProps {
+  isLoading: boolean;
+  chunkIndex: number;
+  setChunkIndex: Dispatch<SetStateAction<number>>;
+  chunk: Chunk;
 }
 
 export default function ChunkProvider() {
@@ -38,7 +51,7 @@ export default function ChunkProvider() {
             moduleChunk: Chunk;
           };
         }
-        
+
         const response = (await axios.get(
           `/api/module-chunk/${unitModule.chunks[chunkIndex].id}`
         )) as ChunkDetailResponse;
@@ -63,10 +76,20 @@ export default function ChunkProvider() {
   return (
     <>
       <div className="lg:hidden">
-        <NormalView />
+        <NormalView
+          isLoading={isLoading}
+          chunkIndex={chunkIndex}
+          setChunkIndex={setChunkIndex}
+          chunk={chunk}
+        />
       </div>
       <div className="hidden lg:block">
-        <DesktopView />
+        <DesktopView
+          isLoading={isLoading}
+          chunkIndex={chunkIndex}
+          setChunkIndex={setChunkIndex}
+          chunk={chunk}
+        />
       </div>
     </>
   );

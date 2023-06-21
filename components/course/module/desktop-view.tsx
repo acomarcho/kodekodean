@@ -5,8 +5,9 @@ import { useContext, useState, useEffect, useRef } from "react";
 import { UnitModuleContext } from "@/contexts/unit-module-context";
 import ReactMarkdown from "react-markdown";
 import rehypeRaw from "rehype-raw";
+import { ViewProps } from "./chunk-provider"
 
-export default function DesktopView() {
+export default function DesktopView({ isLoading, chunkIndex, setChunkIndex, chunk } : ViewProps) {
   const { unitModule, chunks } = useContext(UnitModuleContext);
 
   const [navbarHeight, setNavbarHeight] = useState<number>(0);

@@ -5,8 +5,9 @@ import { useContext, useState, useRef, useEffect } from "react";
 import { UnitModuleContext } from "@/contexts/unit-module-context";
 import ReactMarkdown from "react-markdown";
 import rehypeRaw from "rehype-raw";
+import { ViewProps } from "./chunk-provider";
 
-export default function NormalView() {
+export default function NormalView({ isLoading, chunkIndex, setChunkIndex, chunk } : ViewProps) {
   const { unitModule, chunks } = useContext(UnitModuleContext);
   const [isOpen, setIsOpen] = useState<boolean>(false);
 
