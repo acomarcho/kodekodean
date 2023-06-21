@@ -24,9 +24,10 @@ export default function DesktopView() {
   
   ## Video
   
-  <iframe src="https://www.youtube.com/embed/RBqWwm2eEq0"/>
+  <iframe src="https://www.youtube.com/embed/RBqWwm2eEq0"></iframe>
   
   ## Teks
+
   Lorem ipsum dolor sit amet, consectetur adipiscing elit. Maecenas placerat, lectus quis suscipit dapibus, nibh mi ali quam arcu, in commodo sapien enim vitae magna. Quisque dictum egestas est. Ut molestie est libero, sed egestas leo viverra et. Sed tristique, velit congue pharetra posuere, nulla elit luctus lorem, at lacinia sapien urna ut diam. Quisque nunc sapien, mattis eget dolor in, pulvinar rhoncus dolor. Aliquam id aliquam libero, vel feugiat lectus. Etiam aliquet, massa vel molestie cursus, velit elit rutrum diam, et scelerisque urna orci a ipsum. Praesent ultricies mi nec odio semper faucibus. 
   
   ![Test image](https://upload.wikimedia.org/wikipedia/commons/2/29/Postgresql_elephant.svg)
@@ -78,14 +79,23 @@ export default function DesktopView() {
       </div>
       {/* Content */}
       <div
-        className="p-[2rem] bg-dark-gray absolute left-[50%] translate-x-[-50%] w-[40rem]"
+        className="p-[2rem] bg-dark-gray absolute left-[50%] translate-x-[-50%] w-[40rem] flex flex-col gap-[1rem]"
         style={{
           top: `${navbarHeight + 32}px`,
         }}
       >
-        <ReactMarkdown className="mobile-markdown" rehypePlugins={[rehypeRaw]}>
+        <ReactMarkdown className="desktop-markdown" rehypePlugins={[rehypeRaw]}>
           {content}
         </ReactMarkdown>
+        {/* Buttons */}
+        <div className="flex justify-between">
+          <button className="bg-none text-[1.25rem] px-[1rem] py-[0.5rem] text-white font-bold border-2 border-white pointer transition-all hover:bg-white hover:text-black">
+            Kembali
+          </button>
+          <button className="bg-primary text-[1.25rem] px-[1rem] py-[0.5rem] text-white font-bold pointer transition-all hover:bg-primary-hover">
+            Lanjut
+          </button>
+        </div>
       </div>
     </>
   );
