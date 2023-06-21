@@ -26,3 +26,11 @@ export interface CourseUnitModule {
   rank: number;
   course_unit_id: number;
 }
+
+export interface CourseUnitModuleChunk {
+  id: number;
+  title: string;
+  content_path: string;
+  rank: number;
+  unit_module_id: number;
+}
