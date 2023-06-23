@@ -3,13 +3,10 @@
 import Image from "next/image";
 import { useContext, useState, useRef, useEffect } from "react";
 import { UnitModuleContext } from "@/contexts/unit-module-context";
-import ReactMarkdown from "react-markdown";
-import rehypeRaw from "rehype-raw";
 import { ViewProps } from "./chunk-provider";
 import { Spin } from "antd";
 import { useRouter } from "next/navigation";
-import { Prism as SyntaxHighlighter } from "react-syntax-highlighter";
-import { oneDark } from "react-syntax-highlighter/dist/cjs/styles/prism";
+import MarkdownWithCode from "./markdown-with-code";
 
 export default function NormalView({
   isLoading,
@@ -136,32 +133,11 @@ export default function NormalView({
       >
         {!isLoading && (
           <>
-            <ReactMarkdown
-              className="mobile-markdown"
-              rehypePlugins={[rehypeRaw]}
-              components={{
-                code({ node, inline, className, children, ...props }) {
-                  const match = /language-(\w+)/.exec(className || "");
-                  return !inline && match ? (
-                    <SyntaxHighlighter
-                      language={match[1]}
-                      style={oneDark as any}
-                      {...props}
-                    >
-                      {String(children).replace(/\n$/, "")}
-                    </SyntaxHighlighter>
-                  ) : (
-                    <code className={className} {...props}>
-                      {children}
-                    </code>
-                  );
-                },
-              }}
-            >
+            <MarkdownWithCode className="mobile-markdown">
               {chunk.title
                 ? `# ${chunk.rank}. ${chunk.title}\n\n${chunk.content}`
                 : "Konten tidak ditemukan"}
-            </ReactMarkdown>
+            </MarkdownWithCode>
             {/* Buttons */}
             <div className="flex justify-between">
               <button
