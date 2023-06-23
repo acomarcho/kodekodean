@@ -7,6 +7,7 @@ import { ViewProps } from "./chunk-provider";
 import { Spin } from "antd";
 import { useRouter } from "next/navigation";
 import MarkdownWithCode from "./markdown-with-code";
+import { useWindowSize } from "usehooks-ts";
 
 export default function NormalView({
   isLoading,
@@ -22,13 +23,15 @@ export default function NormalView({
 
   const router = useRouter();
 
+  const { width, height } = useWindowSize();
+
   useEffect(() => {
     if (!navbarRef.current?.clientHeight) {
       return;
     }
 
     setNavbarHeight(navbarRef.current?.clientHeight);
-  }, []);
+  }, [width, height]);
 
   const handleNextClick = () => {
     if (chunkIndex >= chunks.length - 1) {
