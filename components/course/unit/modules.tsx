@@ -10,7 +10,7 @@ import ModuleAccordion from "./module-accordion";
 export default function Modules() {
   const [isLoading, setIsLoading] = useState<boolean>(false);
   const [unitModules, setUnitModules] = useState<CourseUnitModule[]>([]);
-  const courseUnit = useContext(CourseUnitContext);
+  const { courseUnit } = useContext(CourseUnitContext);
 
   const [api, contextHolder] = notification.useNotification();
 

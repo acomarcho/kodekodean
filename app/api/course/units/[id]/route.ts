@@ -14,8 +14,19 @@ export async function GET(_: Request, { params }: Params) {
     let values: string[];
     let result: QueryResult<any>;
 
-    // TODO: Return number of modules and completed modules
-    query = "SELECT id, title, rank, course_id FROM course_units WHERE course_id = $1 ORDER BY rank ASC";
+    query = `
+      SELECT
+        cu.id, cu.title, cu.rank, cu.course_id, COUNT(cu.id) module_count
+      FROM
+        course_units cu
+        JOIN course_unit_modules cum ON cum.course_unit_id = cu.id
+      WHERE
+        cu.course_id = $1
+      GROUP BY
+        cu.id
+      ORDER BY
+        cu.rank ASC
+    `;
     values = [params.id];
     result = await conn!.query(query, values);
 
@@ -26,7 +37,21 @@ export async function GET(_: Request, { params }: Params) {
       );
     }
 
-    return NextResponse.json({ units: result.rows }, { status: 200 });
+    let formattedResult = result.rows.map((row) => {
+      return {
+        unit: {
+          id: row.id,
+          title: row.title,
+          rank: row.rank,
+          course_id: row.course_id,
+        },
+        modules: {
+          count: row.module_count,
+        },
+      };
+    });
+
+    return NextResponse.json({ units: formattedResult }, { status: 200 });
   } catch (error) {
     return NextResponse.json(
       { message: "Terjadi kesalahan pada server" },
