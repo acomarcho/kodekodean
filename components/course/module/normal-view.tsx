@@ -3,11 +3,10 @@
 import Image from "next/image";
 import { useContext, useState, useRef, useEffect } from "react";
 import { UnitModuleContext } from "@/contexts/unit-module-context";
-import ReactMarkdown from "react-markdown";
-import rehypeRaw from "rehype-raw";
 import { ViewProps } from "./chunk-provider";
 import { Spin } from "antd";
 import { useRouter } from "next/navigation";
+import MarkdownWithCode from "./markdown-with-code";
 
 export default function NormalView({
   isLoading,
@@ -77,7 +76,9 @@ export default function NormalView({
           />
         </button>
         <h1 className="w-[60%] text-white text-right font-bold text-[1.25rem]">
-          {unitModule.rank !== -1 ? `${unitModule.rank}. ${unitModule.title}` : `Modul tidak ditemukan`}
+          {unitModule.rank !== -1
+            ? `${unitModule.rank}. ${unitModule.title}`
+            : `Modul tidak ditemukan`}
         </h1>
         {/* Overlay*/}
         <div
@@ -132,14 +133,11 @@ export default function NormalView({
       >
         {!isLoading && (
           <>
-            <ReactMarkdown
-              className="mobile-markdown"
-              rehypePlugins={[rehypeRaw]}
-            >
+            <MarkdownWithCode className="mobile-markdown">
               {chunk.title
                 ? `# ${chunk.rank}. ${chunk.title}\n\n${chunk.content}`
                 : "Konten tidak ditemukan"}
-            </ReactMarkdown>
+            </MarkdownWithCode>
             {/* Buttons */}
             <div className="flex justify-between">
               <button

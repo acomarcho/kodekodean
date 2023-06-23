@@ -3,11 +3,10 @@
 import Image from "next/image";
 import { useContext, useState, useEffect, useRef } from "react";
 import { UnitModuleContext } from "@/contexts/unit-module-context";
-import ReactMarkdown from "react-markdown";
-import rehypeRaw from "rehype-raw";
 import { ViewProps } from "./chunk-provider";
 import { Spin } from "antd";
 import { useRouter } from "next/navigation";
+import MarkdownWithCode from "./markdown-with-code";
 
 export default function DesktopView({
   isLoading,
@@ -117,14 +116,11 @@ export default function DesktopView({
       >
         {!isLoading && (
           <>
-            <ReactMarkdown
-              className="desktop-markdown"
-              rehypePlugins={[rehypeRaw]}
-            >
+            <MarkdownWithCode className="desktop-markdown">
               {chunk.title
                 ? `# ${chunk.rank}. ${chunk.title}\n\n${chunk.content}`
                 : "Konten tidak ditemukan"}
-            </ReactMarkdown>
+            </MarkdownWithCode>
             {/* Buttons */}
             <div className="flex justify-between">
               <button
