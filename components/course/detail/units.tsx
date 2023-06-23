@@ -6,10 +6,24 @@ import axios, { AxiosError } from "axios";
 import { CourseUnit } from "@/lib/schema";
 import { notification, Spin } from "antd";
 import { useRouter } from "next/navigation";
+import Modules from "../unit/modules";
+
+interface CourseUnitData {
+  unit: CourseUnit;
+  modules: {
+    count: number;
+  };
+}
+
+interface CourseUnitResponse {
+  data: {
+    units: CourseUnitData[];
+  };
+}
 
 export default function Units() {
   const [isLoading, setIsLoading] = useState<boolean>(false);
-  const [courseUnits, setCourseUnits] = useState<CourseUnit[]>([]);
+  const [courseUnits, setCourseUnits] = useState<CourseUnitData[]>([]);
   const course = useContext(CourseContext);
 
   const [api, contextHolder] = notification.useNotification();
@@ -21,12 +35,6 @@ export default function Units() {
       setIsLoading(true);
 
       try {
-        interface CourseUnitResponse {
-          data: {
-            units: CourseUnit[];
-          };
-        }
-
         const response = (await axios.get(
           `/api/course/units/${course.id}`
         )) as CourseUnitResponse;
@@ -61,8 +69,8 @@ export default function Units() {
   }, [api, course]);
 
   const handleClick = (id: number) => {
-    router.push(`/course/unit/${id}`)
-  }
+    router.push(`/course/unit/${id}`);
+  };
 
   if (isLoading) {
     return (
@@ -79,7 +87,9 @@ export default function Units() {
   return (
     <div className="p-[1rem] grid grid-cols-1 gap-[1rem] lg:px-[2.5rem] lg:grid-cols-2">
       {contextHolder}
-      {courseUnits.map(({ id, title, rank }) => {
+      {courseUnits.map(({ unit, modules }) => {
+        const { id, rank, title } = unit;
+        const { count } = modules;
         return (
           <div
             className="w-[100%] bg-dark-gray flex flex-col gap-[2rem] justify-between p-[1.5rem] lg:p-[2rem]"
@@ -94,7 +104,7 @@ export default function Units() {
                 {title}
               </p>
               <p className="text-yellow text-[1rem] lg:text-[1.25rem]">
-                0/10 modul sudah Anda selesaikan
+                0/{count} modul sudah Anda selesaikan
               </p>
               {/* <p
                 className={`${
@@ -105,7 +115,10 @@ export default function Units() {
               </p> */}
             </div>
             {/* Button */}
-            <button className="text-white border-2 border-white p-[1rem] font-bold transition-all hover:pointer hover:text-black hover:bg-white text-[1rem] lg:text-[1.25rem]" onClick={() => handleClick(id)}>
+            <button
+              className="text-white border-2 border-white p-[1rem] font-bold transition-all hover:pointer hover:text-black hover:bg-white text-[1rem] lg:text-[1.25rem]"
+              onClick={() => handleClick(id)}
+            >
               Eksplorasi
             </button>
           </div>
