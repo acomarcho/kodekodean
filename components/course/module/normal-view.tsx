@@ -8,6 +8,8 @@ import rehypeRaw from "rehype-raw";
 import { ViewProps } from "./chunk-provider";
 import { Spin } from "antd";
 import { useRouter } from "next/navigation";
+import { Prism as SyntaxHighlighter } from "react-syntax-highlighter";
+import { oneDark } from "react-syntax-highlighter/dist/cjs/styles/prism";
 
 export default function NormalView({
   isLoading,
@@ -77,7 +79,9 @@ export default function NormalView({
           />
         </button>
         <h1 className="w-[60%] text-white text-right font-bold text-[1.25rem]">
-          {unitModule.rank !== -1 ? `${unitModule.rank}. ${unitModule.title}` : `Modul tidak ditemukan`}
+          {unitModule.rank !== -1
+            ? `${unitModule.rank}. ${unitModule.title}`
+            : `Modul tidak ditemukan`}
         </h1>
         {/* Overlay*/}
         <div
@@ -135,6 +139,24 @@ export default function NormalView({
             <ReactMarkdown
               className="mobile-markdown"
               rehypePlugins={[rehypeRaw]}
+              components={{
+                code({ node, inline, className, children, ...props }) {
+                  const match = /language-(\w+)/.exec(className || "");
+                  return !inline && match ? (
+                    <SyntaxHighlighter
+                      language={match[1]}
+                      style={oneDark as any}
+                      {...props}
+                    >
+                      {String(children).replace(/\n$/, "")}
+                    </SyntaxHighlighter>
+                  ) : (
+                    <code className={className} {...props}>
+                      {children}
+                    </code>
+                  );
+                },
+              }}
             >
               {chunk.title
                 ? `# ${chunk.rank}. ${chunk.title}\n\n${chunk.content}`
