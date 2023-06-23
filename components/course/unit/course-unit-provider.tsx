@@ -19,6 +19,7 @@ export default function CourseUnitProvider({ children, id }: Props) {
     rank: -1,
     course_id: -1,
   });
+  const [moduleCount, setModuleCount] = useState<number>(0);
   const [isLoading, setIsLoading] = useState(true);
 
   useEffect(() => {
@@ -28,6 +29,9 @@ export default function CourseUnitProvider({ children, id }: Props) {
         interface CourseUnitDetailResponse {
           data: {
             courseUnit: CourseUnit;
+            modules: {
+              count: number;
+            };
           };
         }
         const response = (await axios.get(
@@ -35,6 +39,7 @@ export default function CourseUnitProvider({ children, id }: Props) {
         )) as CourseUnitDetailResponse;
 
         setCourseUnit(response.data.courseUnit);
+        setModuleCount(response.data.modules.count);
       } catch (error) {
         setCourseUnit({
           id: -1,
@@ -42,6 +47,7 @@ export default function CourseUnitProvider({ children, id }: Props) {
           rank: -1,
           course_id: -1,
         });
+        setModuleCount(0);
       }
       setIsLoading(false);
     };
@@ -61,7 +67,9 @@ export default function CourseUnitProvider({ children, id }: Props) {
   }
 
   return (
-    <CourseUnitContext.Provider value={courseUnit}>
+    <CourseUnitContext.Provider
+      value={{ courseUnit, modules: { count: moduleCount } }}
+    >
       {children}
     </CourseUnitContext.Provider>
   );

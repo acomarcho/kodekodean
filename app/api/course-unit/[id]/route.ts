@@ -21,7 +21,17 @@ export async function GET(_: Request, { params }: Params) {
       );
     }
 
-    query = "SELECT id, title, rank, course_id FROM course_units WHERE id = $1";
+    query = `
+    SELECT
+      cu.id, cu.title, cu.rank, cu.course_id, COUNT(cu.id) module_count
+    FROM
+      course_units cu
+      JOIN course_unit_modules cum ON cum.course_unit_id = cu.id
+    WHERE
+      cu.id = $1
+    GROUP BY
+      cu.id
+    `;
     values = [parseInt(params.id)];
     result = await conn!.query(query, values);
 
@@ -32,7 +42,21 @@ export async function GET(_: Request, { params }: Params) {
       );
     }
 
-    return NextResponse.json({ courseUnit: result.rows[0] }, { status: 200 });
+    const res = result.rows[0];
+
+    let formattedResult = {
+      courseUnit: {
+        id: res.id,
+        title: res.title,
+        rank: res.rank,
+        course_id: res.course_id,
+      },
+      modules: {
+        count: res.module_count,
+      },
+    };
+
+    return NextResponse.json(formattedResult, { status: 200 });
   } catch (error) {
     return NextResponse.json(
       { message: "Terjadi kesalahan pada server" },
