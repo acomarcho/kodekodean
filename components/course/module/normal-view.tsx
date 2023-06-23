@@ -65,6 +65,11 @@ export default function NormalView({
         className="p-[1rem] bg-dark-gray flex justify-between items-center fixed top-0 left-0 right-0"
         ref={navbarRef}
       >
+        <h1 className="w-[60%] text-white font-bold text-[1.25rem]">
+          {unitModule.rank !== -1
+            ? `${unitModule.rank}. ${unitModule.title}`
+            : `Modul tidak ditemukan`}
+        </h1>
         <button
           className={`pointer transition-all ${
             !isOpen ? "rotate-0" : "rotate-90"
@@ -78,11 +83,6 @@ export default function NormalView({
             height={28}
           />
         </button>
-        <h1 className="w-[60%] text-white text-right font-bold text-[1.25rem]">
-          {unitModule.rank !== -1
-            ? `${unitModule.rank}. ${unitModule.title}`
-            : `Modul tidak ditemukan`}
-        </h1>
         {/* Overlay*/}
         <div
           className={`fixed top-0 left-0 transition-all w-[100vw] h-[100vh] bg-transparent z-[2] ${
