@@ -1,13 +1,15 @@
 "use client";
 
 import Image from "next/image";
-import { useContext, useState, useEffect, useRef } from "react";
+import { useContext, useState, useEffect, useRef, CSSProperties } from "react";
 import { UnitModuleContext } from "@/contexts/unit-module-context";
 import ReactMarkdown from "react-markdown";
 import rehypeRaw from "rehype-raw";
 import { ViewProps } from "./chunk-provider";
 import { Spin } from "antd";
 import { useRouter } from "next/navigation";
+import { Prism as SyntaxHighlighter } from "react-syntax-highlighter";
+import { oneDark } from "react-syntax-highlighter/dist/cjs/styles/prism";
 
 export default function DesktopView({
   isLoading,
@@ -120,6 +122,24 @@ export default function DesktopView({
             <ReactMarkdown
               className="desktop-markdown"
               rehypePlugins={[rehypeRaw]}
+              components={{
+                code({ node, inline, className, children, ...props }) {
+                  const match = /language-(\w+)/.exec(className || "");
+                  return !inline && match ? (
+                    <SyntaxHighlighter
+                      language={match[1]}
+                      style={oneDark as any}
+                      {...props}
+                    >
+                      {String(children).replace(/\n$/, "")}
+                    </SyntaxHighlighter>
+                  ) : (
+                    <code className={className} {...props}>
+                      {children}
+                    </code>
+                  );
+                },
+              }}
             >
               {chunk.title
                 ? `# ${chunk.rank}. ${chunk.title}\n\n${chunk.content}`

@@ -8,4 +8,10 @@ Lorem ipsum dolor sit amet, consectetur adipiscing elit. Maecenas placerat, lect
 
 ![Test image](https://upload.wikimedia.org/wikipedia/commons/2/29/Postgresql_elephant.svg)
 
-Nulla diam nunc, pulvinar nec hendrerit sed, dignissim non ipsum. Fusce porta lacus at cursus lacinia. Nulla facilisi. Morbi vitae condimentum quam. Etiam at egestas massa, blandit consectetur elit. Pellentesque condimentum posuere vestibulum. Praesent aliquam ac libero at laoreet.
+## Sample code
+
+```python
+print("Hello World!")
+def myFunc():
+  print("myFunc is called!")
+```
