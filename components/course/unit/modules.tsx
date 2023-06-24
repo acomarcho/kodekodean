@@ -7,9 +7,14 @@ import { CourseUnitModule } from "@/lib/schema";
 import { notification, Spin } from "antd";
 import ModuleAccordion from "./module-accordion";
 
+export interface SingleCourseUnitModule {
+  unitModule: CourseUnitModule;
+  isFinished: boolean;
+}
+
 export default function Modules() {
   const [isLoading, setIsLoading] = useState<boolean>(false);
-  const [unitModules, setUnitModules] = useState<CourseUnitModule[]>([]);
+  const [unitModules, setUnitModules] = useState<SingleCourseUnitModule[]>([]);
   const { courseUnit } = useContext(CourseUnitContext);
 
   const [api, contextHolder] = notification.useNotification();
@@ -21,7 +26,7 @@ export default function Modules() {
       try {
         interface CourseUnitModuleResponse {
           data: {
-            unitModules: CourseUnitModule[];
+            unitModules: SingleCourseUnitModule[];
           };
         }
 
@@ -73,7 +78,7 @@ export default function Modules() {
   return (
     <div className="p-[1rem] flex flex-col gap-[1rem] lg:px-[2.5rem] lg:gap-[1.5rem]">
       {unitModules.map((module) => {
-        return <ModuleAccordion key={module.id} module={module} />;
+        return <ModuleAccordion key={module.unitModule.id} module={module} />;
       })}
     </div>
   );

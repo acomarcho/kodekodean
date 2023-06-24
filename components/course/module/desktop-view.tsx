@@ -8,6 +8,7 @@ import { Spin } from "antd";
 import { useRouter } from "next/navigation";
 import MarkdownWithCode from "./markdown-with-code";
 import { useWindowSize } from "usehooks-ts";
+import axios from "axios";
 
 export default function DesktopView({
   isLoading,
@@ -15,6 +16,8 @@ export default function DesktopView({
   setChunkIndex,
   chunk,
 }: ViewProps) {
+  const [isSaving, setIsSaving] = useState<boolean>(false);
+
   const { unitModule, chunks } = useContext(UnitModuleContext);
 
   const [navbarHeight, setNavbarHeight] = useState<number>(0);
@@ -32,9 +35,15 @@ export default function DesktopView({
     setNavbarHeight(navbarRef.current?.clientHeight);
   }, [width, height]);
 
-  const handleNextClick = () => {
+  const handleNextClick = async () => {
     if (chunkIndex >= chunks.length - 1) {
-      // TODO: Mark user has finished the module
+      try {
+        setIsSaving(true);
+        await axios.post(`/api/unit-module/finish/${unitModule.id}`);
+      } catch (error) {
+        // Do nothing
+      }
+      setIsSaving(false);
       router.back();
     }
 
@@ -133,8 +142,9 @@ export default function DesktopView({
                 Kembali
               </button>
               <button
-                className="bg-primary text-[1.25rem] px-[1rem] py-[0.5rem] text-white font-bold pointer transition-all hover:bg-primary-hover"
+                className="bg-primary text-[1.25rem] px-[1rem] py-[0.5rem] text-white font-bold pointer transition-all hover:bg-primary-hover disabled:opacity-[0.8]"
                 onClick={handleNextClick}
+                disabled={isSaving}
               >
                 {chunkIndex >= chunks.length - 1 ? "Selesai" : "Lanjut"}
               </button>
