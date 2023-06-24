@@ -1,6 +1,6 @@
 import { NextResponse } from "next/server";
 import conn from "@/lib/pg";
-import { UserData, getUser } from "@/lib/server/get-user";
+import { getUser } from "@/lib/server/get-user";
 import { QueryResult, DatabaseError } from "pg";
 
 interface Params {
