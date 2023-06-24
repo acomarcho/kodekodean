@@ -107,13 +107,6 @@ export default function Units() {
               <p className={`${finishedCount < count ? 'text-yellow' : 'text-green'} text-[1rem] lg:text-[1.25rem]`}>
                 {finishedCount}/{count} modul sudah Anda selesaikan
               </p>
-              {/* <p
-                className={`${
-                  finishedCount === moduleCount ? "text-green" : "text-yellow"
-                } text-[1rem] lg:text-[1.25rem]`}
-              >
-                {finishedCount}/{moduleCount} modul sudah Anda selesaikan
-              </p> */}
             </div>
             {/* Button */}
             <button
