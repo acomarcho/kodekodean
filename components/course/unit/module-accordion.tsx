@@ -3,7 +3,7 @@
 import Image from "next/image";
 import { useState } from "react";
 import { useRouter } from "next/navigation";
-import { SingleCourseUnitModule } from "./modules";
+import { SingleCourseUnitModule } from "@/lib/state/response";
 
 interface ModuleProps {
   module: SingleCourseUnitModule;
