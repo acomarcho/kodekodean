@@ -1,7 +1,6 @@
 import { NextResponse } from "next/server";
 import conn from "@/lib/pg";
-import { cookies } from "next/headers";
-import { jwtVerify } from "jose";
+import { UserData, getUser } from "@/lib/server/get-user";
 import { QueryResult, DatabaseError } from "pg";
 
 interface Params {
@@ -24,32 +23,15 @@ export async function POST(_: Request, { params }: Params) {
     }
 
     // Get user data
-    interface UserData {
-      id: number;
-      username: string;
-      email: string;
-    }
-    const cookieStore = cookies();
-    const jwtToken = cookieStore.get("jwt");
-    let user: UserData;
-    if (!jwtToken) {
+    const getUserData = await getUser();
+    if (getUserData.status !== 200) {
       return NextResponse.json(
-        { message: "Anda tidak memiliki akses untuk melakukan perintah ini" },
-        { status: 401 }
+        { message: "Anda tidak memiliki akses untuk melakukan perintah ini!" },
+        { status: getUserData.status }
       );
     }
-    try {
-      const { payload } = await jwtVerify(
-        jwtToken.value,
-        new TextEncoder().encode(process.env.JWT_SECRET!)
-      );
-      user = payload as unknown as UserData;
-    } catch (error) {
-      return NextResponse.json(
-        { message: "Anda tidak memiliki akses untuk melakukan perintah ini" },
-        { status: 403 }
-      );
-    }
+
+    const user = getUserData.user!;
 
     query =
       "INSERT INTO user_unit_modules (user_id, unit_module_id, created_at) VALUES($1, $2, NOW())";
