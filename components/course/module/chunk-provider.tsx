@@ -8,8 +8,7 @@ import {
   SetStateAction,
 } from "react";
 import { UnitModuleContext } from "@/contexts/unit-module-context";
-import NormalView from "./normal-view";
-import DesktopView from "./desktop-view";
+import ModuleView from "./module-view";
 import axios from "axios";
 
 export interface Chunk {
@@ -74,23 +73,11 @@ export default function ChunkProvider() {
   }, [chunkIndex, unitModule.chunks]);
 
   return (
-    <>
-      <div className="lg:hidden">
-        <NormalView
-          isLoading={isLoading}
-          chunkIndex={chunkIndex}
-          setChunkIndex={setChunkIndex}
-          chunk={chunk}
-        />
-      </div>
-      <div className="hidden lg:block">
-        <DesktopView
-          isLoading={isLoading}
-          chunkIndex={chunkIndex}
-          setChunkIndex={setChunkIndex}
-          chunk={chunk}
-        />
-      </div>
-    </>
+    <ModuleView
+      isLoading={isLoading}
+      chunkIndex={chunkIndex}
+      setChunkIndex={setChunkIndex}
+      chunk={chunk}
+    />
   );
 }
