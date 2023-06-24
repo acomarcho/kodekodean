@@ -3,6 +3,10 @@
 import { ReactNode, useState, useEffect } from "react";
 import { UnitModuleContext } from "@/contexts/unit-module-context";
 import { CourseUnitModule, CourseUnitModuleChunk } from "@/lib/state/schema";
+import {
+  UnitModuleDetailResponse,
+  UnitModuleChunksResponse,
+} from "@/lib/state/response";
 import { Spin } from "antd";
 import axios from "axios";
 
@@ -27,12 +31,6 @@ export default function UnitModuleProvider({ children, id }: Props) {
       setIsLoading(true);
 
       try {
-        interface UnitModuleDetailResponse {
-          data: {
-            unitModule: CourseUnitModule;
-          };
-        }
-
         const unitModuleDetailResponse = (await axios.get(
           `/api/unit-module/${id}`
         )) as UnitModuleDetailResponse;
@@ -49,12 +47,6 @@ export default function UnitModuleProvider({ children, id }: Props) {
       }
 
       try {
-        interface UnitModuleChunksResponse {
-          data: {
-            moduleChunks: CourseUnitModuleChunk[];
-          };
-        }
-
         const unitModuleChunksResponse = (await axios.get(
           `/api/unit-module/chunks/${id}`
         )) as UnitModuleChunksResponse;

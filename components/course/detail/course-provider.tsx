@@ -4,6 +4,7 @@ import { ReactNode } from "react";
 import { useEffect, useState } from "react";
 import { CourseContext } from "@/contexts/course-context";
 import { Course } from "@/lib/state/schema";
+import { CourseDetailResponse } from "@/lib/state/response";
 import { Spin } from "antd";
 import axios from "axios";
 
@@ -25,11 +26,6 @@ export default function CourseProvider({ children, id }: Props) {
     const fetchCourseInfo = async () => {
       setIsLoading(true);
       try {
-        interface CourseDetailResponse {
-          data: {
-            course: Course;
-          };
-        }
         const response = (await axios.get(
           `/api/course/${id}`
         )) as CourseDetailResponse;

@@ -3,14 +3,9 @@
 import { useState, useEffect, useContext } from "react";
 import { CourseUnitContext } from "@/contexts/course-unit-context";
 import axios, { AxiosError } from "axios";
-import { CourseUnitModule } from "@/lib/state/schema";
 import { notification, Spin } from "antd";
 import ModuleAccordion from "./module-accordion";
-
-export interface SingleCourseUnitModule {
-  unitModule: CourseUnitModule;
-  isFinished: boolean;
-}
+import { SingleCourseUnitModule, CourseUnitModuleResponse, ErrorResponse } from "@/lib/state/response";
 
 export default function Modules() {
   const [isLoading, setIsLoading] = useState<boolean>(false);
@@ -24,12 +19,6 @@ export default function Modules() {
       setIsLoading(true);
 
       try {
-        interface CourseUnitModuleResponse {
-          data: {
-            unitModules: SingleCourseUnitModule[];
-          };
-        }
-
         const response = (await axios.get(
           `/api/course-unit/modules/${courseUnit.id}`
         )) as CourseUnitModuleResponse;
@@ -37,12 +26,6 @@ export default function Modules() {
 
         setIsLoading(false);
       } catch (error) {
-        interface ErrorResponse {
-          data: {
-            message: string;
-          };
-        }
-
         const err = error as AxiosError;
         let errMessage = "";
         if (err.response) {

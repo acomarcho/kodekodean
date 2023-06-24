@@ -10,16 +10,7 @@ import {
 import { UnitModuleContext } from "@/contexts/unit-module-context";
 import ModuleView from "./module-view";
 import axios from "axios";
-
-export interface Chunk {
-  id: number;
-  title: string;
-  content_path: string;
-  rank: number;
-  unit_module_id: number;
-  content: string;
-}
-
+import { Chunk, ChunkDetailResponse } from "@/lib/state/response";
 export interface ViewProps {
   isLoading: boolean;
   chunkIndex: number;
@@ -45,12 +36,6 @@ export default function ChunkProvider() {
     const fetchChunkData = async () => {
       setIsLoading(true);
       try {
-        interface ChunkDetailResponse {
-          data: {
-            moduleChunk: Chunk;
-          };
-        }
-
         const response = (await axios.get(
           `/api/module-chunk/${unitModule.chunks[chunkIndex].id}`
         )) as ChunkDetailResponse;
