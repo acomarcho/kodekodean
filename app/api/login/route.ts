@@ -2,7 +2,7 @@ import { NextResponse } from "next/server";
 import conn from "@/lib/pg";
 import bcrypt from "bcrypt";
 import { QueryResult } from "pg";
-import { User } from "@/lib/schema";
+import { User } from "@/lib/state/schema";
 import { verify } from "hcaptcha";
 import { cookies } from "next/headers";
 import { SignJWT } from "jose";

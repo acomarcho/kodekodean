@@ -2,7 +2,7 @@
 
 import { useState, useEffect } from "react";
 import axios, { AxiosError } from "axios";
-import { Course } from "@/lib/schema";
+import { Course } from "@/lib/state/schema";
 import { notification, Spin } from "antd";
 import { useRouter } from "next/navigation";
 

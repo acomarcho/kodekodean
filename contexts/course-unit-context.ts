@@ -1,5 +1,5 @@
 import { createContext } from "react";
-import { CourseUnit } from "@/lib/schema";
+import { CourseUnit } from "@/lib/state/schema";
 
 export interface ICourseUnitContext {
   courseUnit: CourseUnit;

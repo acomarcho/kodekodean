@@ -3,7 +3,7 @@
 import { ReactNode } from "react";
 import { useEffect, useState } from "react";
 import { CourseContext } from "@/contexts/course-context";
-import { Course } from "@/lib/schema";
+import { Course } from "@/lib/state/schema";
 import { Spin } from "antd";
 import axios from "axios";
 

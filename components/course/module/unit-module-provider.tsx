@@ -2,7 +2,7 @@
 
 import { ReactNode, useState, useEffect } from "react";
 import { UnitModuleContext } from "@/contexts/unit-module-context";
-import { CourseUnitModule, CourseUnitModuleChunk } from "@/lib/schema";
+import { CourseUnitModule, CourseUnitModuleChunk } from "@/lib/state/schema";
 import { Spin } from "antd";
 import axios from "axios";
 

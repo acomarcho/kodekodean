@@ -3,7 +3,7 @@
 import { useState, useEffect, useContext } from "react";
 import { CourseUnitContext } from "@/contexts/course-unit-context";
 import axios, { AxiosError } from "axios";
-import { CourseUnitModule } from "@/lib/schema";
+import { CourseUnitModule } from "@/lib/state/schema";
 import { notification, Spin } from "antd";
 import ModuleAccordion from "./module-accordion";
 

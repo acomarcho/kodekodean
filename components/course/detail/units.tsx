@@ -3,10 +3,9 @@
 import { useState, useEffect, useContext } from "react";
 import { CourseContext } from "@/contexts/course-context";
 import axios, { AxiosError } from "axios";
-import { CourseUnit } from "@/lib/schema";
+import { CourseUnit } from "@/lib/state/schema";
 import { notification, Spin } from "antd";
 import { useRouter } from "next/navigation";
-import Modules from "../unit/modules";
 
 interface CourseUnitData {
   unit: CourseUnit;
