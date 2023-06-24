@@ -12,6 +12,7 @@ interface CourseUnitData {
   unit: CourseUnit;
   modules: {
     count: number;
+    finishedCount: number;
   };
 }
 
@@ -89,7 +90,7 @@ export default function Units() {
       {contextHolder}
       {courseUnits.map(({ unit, modules }) => {
         const { id, rank, title } = unit;
-        const { count } = modules;
+        const { count, finishedCount } = modules;
         return (
           <div
             className="w-[100%] bg-dark-gray flex flex-col gap-[2rem] justify-between p-[1.5rem] lg:p-[2rem]"
@@ -103,8 +104,8 @@ export default function Units() {
               <p className="text-light-gray text-[1rem] lg:text-[1.25rem]">
                 {title}
               </p>
-              <p className="text-yellow text-[1rem] lg:text-[1.25rem]">
-                0/{count} modul sudah Anda selesaikan
+              <p className={`${finishedCount < count ? 'text-yellow' : 'text-green'} text-[1rem] lg:text-[1.25rem]`}>
+                {finishedCount}/{count} modul sudah Anda selesaikan
               </p>
               {/* <p
                 className={`${
