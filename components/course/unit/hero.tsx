@@ -17,7 +17,8 @@ export default function Hero() {
               : "Course unit tidak ditemukan"}
           </h1>
           <p className="text-light-gray text-[1rem] lg:text-[1.25rem]">
-            Anda sudah menyelesaikan 0/{modules.count} modul pada unit ini.
+            Anda sudah menyelesaikan {modules.finishedCount}/{modules.count}{" "}
+            modul pada unit ini.
           </p>
         </div>
       </div>

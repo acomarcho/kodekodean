@@ -20,6 +20,7 @@ export default function CourseUnitProvider({ children, id }: Props) {
     course_id: -1,
   });
   const [moduleCount, setModuleCount] = useState<number>(0);
+  const [finishedCount, setFinishedCount] = useState<number>(0);
   const [isLoading, setIsLoading] = useState(true);
 
   useEffect(() => {
@@ -31,6 +32,7 @@ export default function CourseUnitProvider({ children, id }: Props) {
             courseUnit: CourseUnit;
             modules: {
               count: number;
+              finishedCount: number;
             };
           };
         }
@@ -40,6 +42,7 @@ export default function CourseUnitProvider({ children, id }: Props) {
 
         setCourseUnit(response.data.courseUnit);
         setModuleCount(response.data.modules.count);
+        setFinishedCount(response.data.modules.finishedCount);
       } catch (error) {
         setCourseUnit({
           id: -1,
@@ -48,6 +51,7 @@ export default function CourseUnitProvider({ children, id }: Props) {
           course_id: -1,
         });
         setModuleCount(0);
+        setFinishedCount(0);
       }
       setIsLoading(false);
     };
@@ -68,7 +72,7 @@ export default function CourseUnitProvider({ children, id }: Props) {
 
   return (
     <CourseUnitContext.Provider
-      value={{ courseUnit, modules: { count: moduleCount } }}
+      value={{ courseUnit, modules: { count: moduleCount, finishedCount } }}
     >
       {children}
     </CourseUnitContext.Provider>

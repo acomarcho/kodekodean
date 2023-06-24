@@ -3,19 +3,15 @@
 import Image from "next/image";
 import { useState } from "react";
 import { useRouter } from "next/navigation";
+import { SingleCourseUnitModule } from "./modules";
 
 interface ModuleProps {
-  module: {
-    id: number;
-    title: string;
-    description: string;
-    finished?: boolean;
-    rank: number;
-  };
+  module: SingleCourseUnitModule;
 }
 
 export default function ModuleAccordion({ module }: ModuleProps) {
-  const { id, title, description, finished, rank } = module;
+  const { id, title, description, rank } = module.unitModule;
+  const { isFinished } = module;
 
   const [isOpen, setIsOpen] = useState<boolean>(false);
 
@@ -29,7 +25,7 @@ export default function ModuleAccordion({ module }: ModuleProps) {
     <div className="p-[1rem] bg-dark-gray lg:p-[1.5rem]" key={id}>
       <div className="flex justify-between items-center">
         <h1 className="text-white text-[1rem] font-bold w-[60%] lg:text-[2rem]">
-          <span className={`${finished ? "text-green" : "text-yellow"}`}>
+          <span className={`${isFinished ? "text-green" : "text-yellow"}`}>
             {`#${rank}`}.{" "}
           </span>
           {title}

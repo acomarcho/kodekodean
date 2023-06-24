@@ -5,6 +5,7 @@ export interface ICourseUnitContext {
   courseUnit: CourseUnit;
   modules: {
     count: number;
+    finishedCount: number;
   };
 }
 
@@ -17,5 +18,6 @@ export const CourseUnitContext = createContext<ICourseUnitContext>({
   },
   modules: {
     count: 0,
+    finishedCount: 0,
   },
 });
