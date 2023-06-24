@@ -34,3 +34,11 @@ CREATE TABLE IF NOT EXISTS course_unit_module_chunks (
   rank INT,
   unit_module_id INT REFERENCES course_unit_modules(id)
 );
+
+CREATE TABLE IF NOT EXISTS user_unit_modules (
+  id SERIAL PRIMARY KEY,
+  user_id INT REFERENCES users(id),
+  unit_module_id INT REFERENCES course_unit_modules(id),
+  created_at TIMESTAMPTZ,
+  UNIQUE(user_id, unit_module_id)
+);
