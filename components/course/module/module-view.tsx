@@ -22,18 +22,19 @@ export default function ModuleView({
   const [isOpen, setIsOpen] = useState<boolean>(false);
 
   const [navbarHeight, setNavbarHeight] = useState<number>(0);
-  const navbarRef = useRef<HTMLDivElement>(null);
+  const mobileNavbarRef = useRef<HTMLDivElement>(null);
+  const desktopNavbarRef = useRef<HTMLDivElement>(null);
 
   const router = useRouter();
 
   const { width, height } = useWindowSize();
 
   useEffect(() => {
-    if (!navbarRef.current?.clientHeight) {
+    if (!mobileNavbarRef.current?.clientHeight && !desktopNavbarRef.current?.clientHeight) {
       return;
     }
 
-    setNavbarHeight(navbarRef.current?.clientHeight);
+    setNavbarHeight(mobileNavbarRef.current?.clientHeight || desktopNavbarRef.current?.clientHeight!);
   }, [width, height]);
 
   const handleNextClick = async () => {
@@ -73,7 +74,7 @@ export default function ModuleView({
         {/* Navigation bar */}
         <div
           className="p-[1rem] bg-dark-gray flex justify-between items-center fixed top-0 left-0 right-0"
-          ref={navbarRef}
+          ref={mobileNavbarRef}
         >
           <h1 className="w-[60%] text-white font-bold text-[1.25rem]">
             {unitModule.rank !== -1
@@ -181,7 +182,7 @@ export default function ModuleView({
         {/* Navbar */}
         <div
           className="fixed top-0 left-0 right-0 bg-dark-gray z-[2]"
-          ref={navbarRef}
+          ref={desktopNavbarRef}
         >
           <div className="max-w-[1280px] mx-auto p-[1rem] px-[2.5rem]">
             <div className="flex items-center gap-[2rem]">
