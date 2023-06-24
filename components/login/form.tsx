@@ -5,6 +5,7 @@ import { useRouter } from "next/navigation";
 import axios, { AxiosError } from "axios";
 import { notification } from "antd";
 import HCaptcha from "@hcaptcha/react-hcaptcha";
+import { LoginResponse } from "@/lib/state/response"
 
 interface InputProps {
   type: string;
@@ -67,12 +68,6 @@ export default function RegisterForm() {
       isLoading
     ) {
       return;
-    }
-
-    interface LoginResponse {
-      data: {
-        message: string;
-      };
     }
 
     try {

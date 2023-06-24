@@ -1,5 +1,5 @@
 import axios from "axios";
-import { User } from "./schema";
+import { User } from "@/lib/state/schema";
 
 export const authenticateUser: () => Promise<null | User> = async () => {
   try {

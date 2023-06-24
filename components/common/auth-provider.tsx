@@ -5,7 +5,7 @@ import { useEffect, useState } from "react";
 import { authenticateUser } from "@/lib/authenticate";
 import { useRouter } from "next/navigation";
 import { AuthContext } from "@/contexts/auth-context";
-import { User } from "@/lib/schema";
+import { User } from "@/lib/state/schema";
 import { Spin } from "antd";
 
 interface Props {

@@ -3,24 +3,9 @@
 import { useState, useEffect, useContext } from "react";
 import { CourseContext } from "@/contexts/course-context";
 import axios, { AxiosError } from "axios";
-import { CourseUnit } from "@/lib/schema";
 import { notification, Spin } from "antd";
 import { useRouter } from "next/navigation";
-import Modules from "../unit/modules";
-
-interface CourseUnitData {
-  unit: CourseUnit;
-  modules: {
-    count: number;
-    finishedCount: number;
-  };
-}
-
-interface CourseUnitResponse {
-  data: {
-    units: CourseUnitData[];
-  };
-}
+import { CourseUnitData, CourseUnitResponse, ErrorResponse } from "@/lib/state/response";
 
 export default function Units() {
   const [isLoading, setIsLoading] = useState<boolean>(false);
@@ -43,12 +28,6 @@ export default function Units() {
 
         setIsLoading(false);
       } catch (error) {
-        interface ErrorResponse {
-          data: {
-            message: string;
-          };
-        }
-
         const err = error as AxiosError;
         let errMessage = "";
         if (err.response) {
@@ -104,7 +83,11 @@ export default function Units() {
               <p className="text-light-gray text-[1rem] lg:text-[1.25rem]">
                 {title}
               </p>
-              <p className={`${finishedCount < count ? 'text-yellow' : 'text-green'} text-[1rem] lg:text-[1.25rem]`}>
+              <p
+                className={`${
+                  finishedCount < count ? "text-yellow" : "text-green"
+                } text-[1rem] lg:text-[1.25rem]`}
+              >
                 {finishedCount}/{count} modul sudah Anda selesaikan
               </p>
             </div>

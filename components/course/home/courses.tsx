@@ -2,7 +2,8 @@
 
 import { useState, useEffect } from "react";
 import axios, { AxiosError } from "axios";
-import { Course } from "@/lib/schema";
+import { Course } from "@/lib/state/schema";
+import { CourseResponse, ErrorResponse } from "@/lib/state/response";
 import { notification, Spin } from "antd";
 import { useRouter } from "next/navigation";
 
@@ -19,23 +20,11 @@ export default function Courses() {
       setIsLoading(true);
 
       try {
-        interface CourseResponse {
-          data: {
-            courses: Course[];
-          };
-        }
-
         const response = (await axios.get("/api/course")) as CourseResponse;
         setCourses(response.data.courses);
 
         setIsLoading(false);
       } catch (error) {
-        interface ErrorResponse {
-          data: {
-            message: string;
-          };
-        }
-
         const err = error as AxiosError;
         let errMessage = "";
         if (err.response) {

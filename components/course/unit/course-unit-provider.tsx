@@ -3,9 +3,10 @@
 import { ReactNode } from "react";
 import { useEffect, useState } from "react";
 import { CourseUnitContext } from "@/contexts/course-unit-context";
-import { CourseUnit } from "@/lib/schema";
+import { CourseUnit } from "@/lib/state/schema";
 import { Spin } from "antd";
 import axios from "axios";
+import { CourseUnitDetailResponse } from "@/lib/state/response";
 
 interface Props {
   children?: ReactNode;
@@ -27,15 +28,6 @@ export default function CourseUnitProvider({ children, id }: Props) {
     const fetchCourseUnitInfo = async () => {
       setIsLoading(true);
       try {
-        interface CourseUnitDetailResponse {
-          data: {
-            courseUnit: CourseUnit;
-            modules: {
-              count: number;
-              finishedCount: number;
-            };
-          };
-        }
         const response = (await axios.get(
           `/api/course-unit/${id}`
         )) as CourseUnitDetailResponse;
