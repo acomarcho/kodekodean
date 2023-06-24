@@ -8,6 +8,7 @@ import { Spin } from "antd";
 import { useRouter } from "next/navigation";
 import MarkdownWithCode from "./markdown-with-code";
 import { useWindowSize } from "usehooks-ts";
+import axios from "axios";
 
 export default function NormalView({
   isLoading,
@@ -15,6 +16,8 @@ export default function NormalView({
   setChunkIndex,
   chunk,
 }: ViewProps) {
+  const [isSaving, setIsSaving] = useState<boolean>(false);
+
   const { unitModule, chunks } = useContext(UnitModuleContext);
   const [isOpen, setIsOpen] = useState<boolean>(false);
 
@@ -33,9 +36,15 @@ export default function NormalView({
     setNavbarHeight(navbarRef.current?.clientHeight);
   }, [width, height]);
 
-  const handleNextClick = () => {
+  const handleNextClick = async () => {
     if (chunkIndex >= chunks.length - 1) {
-      // TODO: Mark user has finished the module
+      try {
+        setIsSaving(true);
+        await axios.post(`/api/unit-module/finish/${unitModule.id}`);
+      } catch (error) {
+        // Do nothing
+      }
+      setIsSaving(false);
       router.back();
     }
 
@@ -150,8 +159,9 @@ export default function NormalView({
                 Kembali
               </button>
               <button
-                className="bg-primary px-[1rem] py-[0.5rem] text-white font-bold pointer transition-all hover:bg-primary-hover"
+                className="bg-primary px-[1rem] py-[0.5rem] text-white font-bold pointer transition-all hover:bg-primary-hover disabled:opacity-[0.8]"
                 onClick={handleNextClick}
+                disabled={isSaving}
               >
                 {chunkIndex >= chunks.length - 1 ? "Selesai" : "Lanjut"}
               </button>
